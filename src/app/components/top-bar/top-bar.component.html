@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+  <button mat-button (click)="router.navigate([''])"><span class="logo"><span style="color: black">Web</span><span>Lib</span></span></button>
+  <div class="spacer"></div>
+  <div class="search-bar-margin">
+    <mat-form-field class="search-bar">
+      <input matInput placeholder="Search books">
+      <button mat-icon-button matSuffix>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="spacer"></div>
+  <button matTooltip="Login" (click)="router.navigate(['/login'])" mat-icon-button class="person-icon" *ngIf="(this.authService.isTokenValid() | async) === false">
+    <mat-icon>person</mat-icon>
+  </button>
+  <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="(this.authService.isTokenValid() | async) === true">
+    <mat-icon>person</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="router.navigate(['/loans'])">Loans</button>
+    <button mat-menu-item (click)="router.navigate(['/reservations'])">Reservations</button>
+  </mat-menu>
+</mat-toolbar>

@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  height: 100%;
+}
+
+.left-column {
+  width: 20%;
+  padding: 8px;
+}
+
+.right-column {
+  flex: 1;
+  padding: 8px;
+}
+
+.mat-divider {
+  height: 100%;
+  margin: 0 8px;
+}

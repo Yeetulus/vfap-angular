@@ -1,0 +1,18 @@
+<div>
+
+  <p class="genres-header">Genres</p>
+  <hr>
+  <div *ngFor="let genre of genres">
+    <app-genre [genre]="genre"></app-genre>
+  </div>
+  <hr>
+  <mat-slide-toggle
+    hideIcon="true"
+    class="slider-margin"
+    color="primary"
+    [(ngModel)]="showAvailable"
+    (change)="onSlideToggleChange()">
+    <span class="toggle-text">{{this.showAvailable? "Search all" : "Search available"}}</span>
+  </mat-slide-toggle>
+
+</div>

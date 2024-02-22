@@ -1,0 +1,18 @@
+.slider-margin{
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.genres-header{
+  margin-top: 10px;
+  font-size: 14pt;
+  margin-left: 18px;
+}
+
+.toggle-text{
+  user-select: none;
+  padding: 5px;
+  margin-left: 4px;
+  font-size: 11pt;
+}

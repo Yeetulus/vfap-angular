@@ -1,0 +1,4 @@
+<button mat-button class="genre" (click)="toggleGenre()">
+  <mat-checkbox [(ngModel)]="genre.show" (change)="onCheckboxChange()" color="primary" class="checkbox-position"></mat-checkbox>
+  <span class="genre-name">{{ genre.name }}</span>
+</button>
