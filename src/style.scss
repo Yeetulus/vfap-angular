@@ -1,0 +1,27 @@
+@use '@angular/material' as mat;
+
+$primary-color: #ea1569;
+$primary-color-hover: #ff3c86;
+
+.text-primary{
+
+  color: $primary-color !important;
+}
+
+a.text-primary:hover{
+  color: $primary-color-hover !important;
+}
+
+.text-primary-bold{
+
+  color: $primary-color !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.menu-button:hover span.text-primary-bold {
+
+  color: $primary-color-hover !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}

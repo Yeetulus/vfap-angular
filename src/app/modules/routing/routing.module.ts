@@ -14,7 +14,7 @@ import {BookViewComponent} from "../../components/book-view/book-view.component"
 import {BookResultsComponent} from "../../components/book-results/book-results.component";
 
 const sidebarContentRoutes: Routes = [
-  { path: 'book-view', component: BookViewComponent, },
+  { path: 'book-view', component: BookViewComponent,},
   { path: '', component: BookResultsComponent, },
 
 ];

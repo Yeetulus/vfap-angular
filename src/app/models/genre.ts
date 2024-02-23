@@ -2,10 +2,11 @@ export class Genre{
 
   public name:string
   public show:boolean
-
-  constructor(name:string, show:boolean) {
+  public id:number
+  constructor(name:string, id:number) {
     this.name = name;
-    this.show = show;
+    this.id = id;
+    this.show = false;
   }
 
 }

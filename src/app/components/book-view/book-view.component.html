@@ -1,1 +1,15 @@
-<p>book-view works!</p>
+<mat-card *ngIf="selectedBook">
+  <mat-card-header>
+    <mat-card-title>{{ selectedBook.title }}</mat-card-title>
+    <mat-card-subtitle>{{ selectedBook.genre.name }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>Pages: {{ selectedBook.pages }}</p>
+    <p>Release Date: {{ selectedBook.releaseDate !== undefined? selectedBook.releaseDate : "Unknown"   }}</p>
+    <p>Authors:</p>
+    <ul>
+      <li *ngFor="let author of selectedBook.authors">{{ author.name }}</li>
+    </ul>
+  </mat-card-content>
+</mat-card>
+<p *ngIf="!selectedBook">No book found</p>

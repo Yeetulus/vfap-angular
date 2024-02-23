@@ -24,6 +24,7 @@ export class AuthService {
     this.apiService.post<AuthResponse>(
       `${this.authUrl}register-user`,
       request,
+      undefined,
       false,
       (response: AuthResponse) => {
         console.log('Registration successful:', response);
@@ -42,6 +43,7 @@ export class AuthService {
     this.apiService.post<AuthResponse>(
       `${this.authUrl}login/authenticate`,
       request,
+      undefined,
       false,
       (response: AuthResponse) => {
         console.log('Authentication successful:', response);
@@ -50,9 +52,8 @@ export class AuthService {
         this.router.navigate([""]);
       },
       (error: HttpErrorResponse, statusCode: number) => {
-        if (statusCode === HttpStatusCode.BadRequest) {
-          this.notificationService.showNotification("Incorrect email or password", NotificationType.Error);
-        }
+
+        this.notificationService.showNotification("Incorrect email or password", NotificationType.Error);
         console.error('Error during authentication:', error);
       }
     ).subscribe();
@@ -90,21 +91,18 @@ export class AuthService {
     const accessToken = localStorage.getItem(this.accessTokenName);
 
     if (accessToken === null) {
-      console.log("TOKEN NOT VALID");
       return of(false);
     }
 
     const decodedToken = this.decodeJwt(accessToken);
 
     if (!decodedToken || !decodedToken.exp) {
-      console.log("TOKEN NOT VALID");
       return of(false);
     }
 
     const currentTime = Math.floor(Date.now() / 1000);
 
     if (decodedToken.exp > currentTime) {
-      console.log("TOKEN VALID");
       return of(true);
     } else {
       localStorage.removeItem(this.accessTokenName);
@@ -115,21 +113,17 @@ export class AuthService {
           map((response) => {
             if (response.access_token) {
               localStorage.setItem(this.accessTokenName, response.access_token);
-              console.log("TOKEN VALID");
               return true;
             } else {
               localStorage.removeItem(this.refreshTokenName)
-              console.log("TOKEN NOT VALID");
               return false;
             }
           }),
           catchError(() => {
-            console.log("TOKEN NOT VALID");
             return of(false);
           })
         );
       } else {
-        console.log("TOKEN NOT VALID");
         return of(false);
       }
     }

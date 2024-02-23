@@ -1,1 +1,21 @@
-<p>book-results works!</p>
+<ng-container *ngIf="bookResults && bookResults.length > 0; else noBooks">
+  <mat-card *ngFor="let book of bookResults">
+    <mat-card-header>
+      <mat-card-title>{{ book.title }}</mat-card-title>
+      <mat-card-subtitle>{{ book.genre.name }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Pages: {{ book.pages }}</p>
+      <p>Release Date: {{ book.releaseDate !== undefined ? book.releaseDate : "Unknown" }}</p>
+      <p>Authors:</p>
+      <ul>
+        <li *ngFor="let author of book.authors">{{ author.name }}</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+<!----<mat-paginator [length]="bookResults.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)"></mat-paginator>
+--->
+<ng-template #noBooks>
+  <p>No books found</p>
+</ng-template>

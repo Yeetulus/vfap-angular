@@ -12,7 +12,6 @@
     color="primary"
     [(ngModel)]="showAvailable"
     (change)="onSlideToggleChange()">
-    <span class="toggle-text">{{this.showAvailable? "Search all" : "Search available"}}</span>
+    <span class="toggle-text">{{this.showAvailable? "Available only" : "Search all"}}</span>
   </mat-slide-toggle>
-
 </div>

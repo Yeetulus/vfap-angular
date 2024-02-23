@@ -24,3 +24,16 @@ button{
 .person-icon {
   margin-left: 20px;
 }
+
+.menu-button{
+  padding: 1px 16px;
+}
+
+.search-result-body{
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.search-result-title-size{
+  font-size: large;
+}

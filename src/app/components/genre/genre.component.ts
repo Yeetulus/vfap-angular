@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Genre} from "../../models/genre";
 import {GenreService} from "../../services/genre/genre.service";
+import {BookService} from "../../services/book/book.service";
 
 @Component({
   selector: 'app-genre',
@@ -21,6 +22,6 @@ export class GenreComponent implements OnInit{
   }
   toggleGenre() {
     this.genre.show = !this.genre.show;
-    this.genreService.changeShowGenre(this.genre);
+    this.genreService.updateGenres(this.genre.id, this.genre.show);
   }
 }

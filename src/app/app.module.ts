@@ -23,13 +23,17 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {RoutingModule} from "./modules/routing/routing.module";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatSelectModule} from "@angular/material/select";
 import { GenreComponent } from './components/genre/genre.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {HttpClientModule} from "@angular/common/http";
 import {MatMenuModule} from "@angular/material/menu";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatCardModule} from "@angular/material/card";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -46,7 +50,7 @@ import {MatMenuModule} from "@angular/material/menu";
     BookViewComponent,
     BookResultsComponent,
     TopBarComponent,
-    GenreComponent
+    GenreComponent,
   ],
     imports: [
         BrowserModule,
@@ -64,7 +68,12 @@ import {MatMenuModule} from "@angular/material/menu";
         MatSelectModule,
         MatCheckboxModule,
         MatTooltipModule,
-        MatMenuModule
+        MatMenuModule,
+        MatSnackBarModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        MatPaginatorModule
     ],
   providers: [],
   bootstrap: [AppComponent]
