@@ -17,6 +17,7 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 })
 export class TopBarComponent implements OnInit {
 
+  searchInputValue: string = "";
   waitingForSearchbar:boolean = false;
   searchControl = new FormControl();
   filteredBooks$: Observable<Book[]>;
@@ -105,11 +106,19 @@ export class TopBarComponent implements OnInit {
     if (this.searchControl.value && this.searchControl.value.trim().length > 0) {
 
       if(this.waitingForSearchbar){
-        this.bookService.fetchBooks(this.searchControl.value.toString(), undefined);
+        let equals = this.searchControl.value.trim() !== this.searchInputValue.trim()
+        if(!equals) this.bookService.fetchBooks(this.searchControl.value.toString(), undefined);
       }
       this.searchControl.setValue('');
+      this.bookService.showBookResults();
       this.waitingForSearchbar = false;
       this.router.navigate([""])
     }
+  }
+
+  onLogoClick() {
+    this.bookService.resetBookResults();
+    this.bookService.hideBookResults();
+    this.router.navigate(['']);
   }
 }

@@ -1,9 +1,9 @@
 <mat-toolbar color="primary">
-  <button mat-button (click)="router.navigate([''])"><span class="logo"><span style="color: black">Web</span><span>Lib</span></span></button>
+  <button mat-button (click)="onLogoClick()"><span class="logo"><span style="color: black">Web</span><span>Lib</span></span></button>
   <div class="spacer"></div>
   <div class="search-bar-margin">
     <mat-form-field class="search-bar">
-      <input matInput placeholder="Search books" (keydown.enter)="onEnter()" [matAutocomplete]="auto" [formControl]="searchControl">
+      <input matInput placeholder="Search books" [(ngModel)]="searchInputValue" (keydown.enter)="onEnter()" [matAutocomplete]="auto" [formControl]="searchControl">
       <button mat-icon-button matSuffix>
         <mat-icon>search</mat-icon>
       </button>

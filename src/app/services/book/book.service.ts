@@ -10,6 +10,7 @@ import {BehaviorSubject} from "rxjs";
 })
 export class BookService {
 
+  public showResults: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private searchOnlyAvailable;
   private genres: Genre[];
   public selectedBookSubject = new BehaviorSubject<Book | null>(null);
@@ -65,5 +66,20 @@ export class BookService {
 
   selectBook(selectedBook: Book) {
     this.selectedBookSubject.next(selectedBook);
+  }
+
+  resetBookResults() {
+    this.bookResults.next([]);
+  }
+
+  showBookResults() {
+    this.updateShowResults(true);
+  }
+  hideBookResults() {
+    this.updateShowResults(false);
+  }
+  updateShowResults(value: boolean){
+    this.showResults.next(value);
+
   }
 }

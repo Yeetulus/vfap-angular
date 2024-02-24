@@ -15,3 +15,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     --mdc-snackbar-supporting-text-color: #fff;
   }
 }
+
+.full-height{
+
+  height: 100%;
+}
+
+.no-scrollbar{
+
+  overflow-y: hidden;
+}
+
+.spacer{
+  padding-top: 25px;
+  padding-bottom: 30px;
+}
+
+

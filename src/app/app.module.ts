@@ -34,6 +34,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatCardModule} from "@angular/material/card";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     BookResultsComponent,
     TopBarComponent,
     GenreComponent,
+    FooterComponent,
   ],
     imports: [
         BrowserModule,
