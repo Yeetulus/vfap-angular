@@ -1,0 +1,10 @@
+<div *ngIf="this.reviews">
+    <div class="stars-content" [ngStyle]="{ 'background': getRatingGradient() }">
+        <mat-icon>star</mat-icon>
+        <mat-icon>star</mat-icon>
+        <mat-icon>star</mat-icon>
+        <mat-icon>star</mat-icon>
+        <mat-icon>star</mat-icon>
+    </div>
+    <span class="text-grey">({{this.reviews.reviewsCount}})</span>
+</div>

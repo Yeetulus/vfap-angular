@@ -13,16 +13,16 @@
     </mat-form-field>
   </div>
   <div class="spacer"></div>
-  <button matTooltip="Login" (click)="router.navigate(['/login'])" mat-icon-button class="person-icon" *ngIf="(this.authService.isTokenValid() | async) === false">
+  <button mat-icon-button [matTooltip]="(authService.isTokenValid() | async) ? 'Open Menu' : 'Login'" (click)="handlePersonIconClick()">
     <mat-icon>person</mat-icon>
   </button>
-  <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="(this.authService.isTokenValid() | async) === true">
-    <mat-icon>person</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button class="menu-button" mat-menu-item *ngIf="this.authService.getUserRole() === UserRole.MEMBER" (click)="router.navigate(['/loans'])">Loans</button>
-    <button class="menu-button" mat-menu-item *ngIf="this.authService.getUserRole() === UserRole.MEMBER" (click)="router.navigate(['/reservations'])">Reservations</button>
-    <hr>
-    <button class="menu-button" mat-menu-item (click)="this.authService.logout()"><span class="text-primary-bold">Logout</span></button>
+  <div #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu"></div>
+  <mat-menu #menu="matMenu" >
+    <button class="menu-button text-primary-hover" mat-menu-item *ngIf="(authService.isTokenValid() | async) && authService.getUserRole() === UserRole.MEMBER" (click)="router.navigate(['/loans'])">Loans</button>
+    <button class="menu-button text-primary-hover" mat-menu-item *ngIf="(authService.isTokenValid() | async) && authService.getUserRole() === UserRole.MEMBER" (click)="router.navigate(['/reservations'])">Reservations</button>
+    <hr *ngIf="(authService.isTokenValid() | async)">
+    <button class="menu-button" mat-menu-item *ngIf="(authService.isTokenValid() | async)" (click)="logout()">
+      <span class="text-primary-bold">Logout</span>
+    </button>
   </mat-menu>
 </mat-toolbar>

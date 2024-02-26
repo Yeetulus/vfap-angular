@@ -1,5 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
-import {Genre} from "../../models/genre";
+import {Genre} from "../../models/book/genre";
 import {BehaviorSubject, delay} from "rxjs";
 import {ApiService} from "../api/api.service";
 import {NonNullableFormBuilder} from "@angular/forms";

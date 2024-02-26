@@ -1,15 +1,66 @@
-<mat-card *ngIf="selectedBook">
-  <mat-card-header>
-    <mat-card-title>{{ selectedBook.title }}</mat-card-title>
-    <mat-card-subtitle>{{ selectedBook.genre.name }}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <p>Pages: {{ selectedBook.pages }}</p>
-    <p>Release Date: {{ selectedBook.releaseDate !== undefined? selectedBook.releaseDate : "Unknown"   }}</p>
-    <p>Authors:</p>
-    <ul>
-      <li *ngFor="let author of selectedBook.authors">{{ author.name }}</li>
-    </ul>
-  </mat-card-content>
-</mat-card>
-<p *ngIf="!selectedBook">No book found</p>
+<div class="scrollable-content">
+    <div *ngIf="selectedBook" class="book-result">
+         <h3 class="book-title text-primary-bold">{{ selectedBook.title }}</h3>
+          <span class="genre-text text-primary-hover" (click)="searchGenreBooks(selectedBook.genre)">{{ selectedBook.genre.name }}</span><br>
+          <div [style]="{'display': 'inline-block',
+                         'margin-top': '5px'}">
+            <h2 class="text-author text-primary-hover" *ngFor="let author of selectedBook.authors" (click)="searchAuthorBooks(author.id)">{{author.name}}</h2>
+          </div><br>
+          <span>Released: {{getDisplayedYear(selectedBook)}}</span><br>
+          <span>Pages: {{ selectedBook.pages }}</span><br>
+          <ng-container *ngIf="availableCount !== undefined && !isValidMember()">
+                <span>Available: </span><span class="{{availableCount!.valueOf() > 0? 'text-green-bold' : 'text-red-bold'}}">
+                    {{availableCount!.valueOf()}}
+                </span>
+          </ng-container>
+        <div *ngIf="reviews">
+            <p class="text-reviewer reviews-margin">Reviews</p>
+            <app-review-stars [reviews]="reviews!"></app-review-stars>
+            <div class="review-card"></div>
+                <mat-card *ngFor="let review of pagedReviews">
+                    <mat-card-content>
+                        <p class="text-reviewer">{{ review.name }}</p>
+                        <div class="rating-position">
+                            <mat-icon [ngStyle]="{'color': 'yellow'}" class="star-icon">star</mat-icon>
+                            <span class="text-icon">{{ review.rating + " / 5"}}</span>
+                        </div>
+                        <p>{{ review.comment }}</p>
+                    </mat-card-content>
+                </mat-card>
+
+            <mat-paginator *ngIf="pagedReviews && pagedReviews.length > 0" [pageSize]="pageSize" [pageIndex]="pageIndex" [length]="reviews.messages.length"
+                           (page)="onPageChange($event)">
+            </mat-paginator>
+        </div>
+        <div *ngIf="enableReview" class="review-form">
+            <mat-card>
+                <mat-card-content>
+                    <p class="text-reviewer">Leave a review</p>
+                    <form (ngSubmit)="submitReview()">
+                        <mat-label>Rating: {{sliderValue.value}}</mat-label><br>
+                        <mat-slider class="slider-width" min="0" max="5" step="1">
+                            <input [formControl]="sliderValue" matSliderThumb>
+                        </mat-slider><br>
+
+                        <mat-form-field>
+                            <mat-label>Comment:</mat-label>
+                            <textarea matInput [formControl]="inputValue" name="input" placeholder="Enter comment"></textarea>
+                        </mat-form-field>
+
+                    <button class="form" type="submit" mat-raised-button color="primary">Submit Review</button>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div *ngIf="isValidMember()">
+            <ng-container *ngIf="availableCount !== undefined">
+                <span>Available: </span><span class="{{availableCount!.valueOf() > 0? 'text-green-bold' : 'text-red-bold'}}">
+                    {{availableCount!.valueOf()}}
+                </span>
+            </ng-container>
+
+        </div>
+        <div class="bottom-spacing"></div>
+    </div>
+    <p class="book-result" *ngIf="!selectedBook">No book found</p>
+</div>

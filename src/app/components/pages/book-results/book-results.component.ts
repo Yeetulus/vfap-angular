@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Book} from "../../../models/book";
+import {Book} from "../../../models/book/book";
 import {BookService} from "../../../services/book/book.service";
 import {PageEvent} from "@angular/material/paginator";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-book-results',
@@ -13,11 +14,12 @@ export class BookResultsComponent implements OnInit{
 
   public showBookResults: boolean
   public bookResults: Book[];
-  pageSize = 3;
+  pageSize = 5;
   currentPage = 0;
-  pageSizeOptions = [3]
+  pageSizeOptions = [5,10,25]
 
-  constructor(private bookService:BookService) {
+  constructor(private bookService:BookService,
+              private router: Router) {
     this.bookResults = [];
     this.showBookResults = false;
   }
@@ -39,5 +41,11 @@ export class BookResultsComponent implements OnInit{
     const startIndex = this.currentPage * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     return this.bookResults.slice(startIndex, endIndex);
+  }
+
+  showBookDetail(book: Book) {
+    this.bookService.selectedBookSubject.next(book);
+    this.bookService.hideBookResults();
+    this.router.navigate(["/book-view"]);
   }
 }

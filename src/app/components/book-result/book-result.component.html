@@ -1,14 +1,24 @@
 <mat-card class="book-result">
   <mat-card-header>
-    <mat-card-title class="text-primary-bold">{{ book.title }}</mat-card-title>
+    <mat-card-title class="text-primary-bold">
+      {{ book.title }}
+      <span class="title-author"> - </span>
+      <span class="title-author" *ngFor="let author of book.authors.slice(0, 3); let last = last">
+        <span [ngClass]="{'author-name': true, 'last': last}">{{ author.name }}</span>
+        <span *ngIf="!last">, </span>
+      </span>
+      <span *ngIf="book.authors.length > 3">...</span>
+    </mat-card-title>
     <mat-card-subtitle>{{ book.genre.name }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <p>Pages: {{ book.pages }}</p>
-    <p>Released in: {{getDisplayedYear()}}</p>
-    <p>Authors:</p>
-    <ul>
-      <li *ngFor="let author of book.authors">{{ author.name }}</li>
-    </ul>
+    <span>Pages: {{ book.pages }}</span><br>
+    <span>Released: {{getDisplayedYear(book)}}</span>
+    <app-review-stars class="review-margin" [reviews]="reviews!"></app-review-stars>
+
+    <div class="card-bottom-right">
+      <span >Available: </span><span class="{{availability > 0? 'text-green-bold' : 'text-red-bold'}}">{{availability}}</span>
+    </div>
+
   </mat-card-content>
 </mat-card>

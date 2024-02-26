@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import {Genre} from "../../models/genre";
+import {Genre} from "../../models/book/genre";
 import {GenreService} from "../genre/genre.service";
 import {ApiService} from "../api/api.service";
-import {Book} from "../../models/book";
+import {Book} from "../../models/book/book";
 import {BehaviorSubject, Observable} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
+import {ReviewComment} from "../../models/book/review-comment";
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,6 @@ export class BookService {
 
   }
   public fetchBooks(term? :string, authorId?: number){
-
     let response = (bookResult: Book[]) =>{
       console.log("Fetched books: ", bookResult)
       this.bookResults.next(bookResult);
@@ -87,10 +87,6 @@ export class BookService {
     this.selectedBookSubject.next(selectedBook);
   }
 
-  resetBookResults() {
-    this.bookResults.next([]);
-  }
-
   showBookResults() {
     this.updateShowResults(true);
     this.bookResults.next(this.searchBarBookResults.value);
@@ -103,4 +99,26 @@ export class BookService {
     this.showResults.next(value);
 
   }
+  getAvailability(bookId:number) {
+    const url = "library/available";
+    const params = {
+      "bookId": bookId
+    };
+    return this.apiService.get<Number>(url, params, false, (response) => {
+      return response;
+    }, (error) => {
+      console.log(error);
+    })
+
+  }
+
+  leaveReview(newReview: {bookId: number, rating: number; comment: string}) {
+    const url = "member/review/create"
+    this.apiService.post<ReviewComment>(url, newReview, undefined, true, response => {
+
+    }, (error, statusCode) => {
+
+    });
+  }
+
 }

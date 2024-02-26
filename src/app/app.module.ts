@@ -36,6 +36,10 @@ import {MatCardModule} from "@angular/material/card";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { FooterComponent } from './components/footer/footer.component';
 import { BookResultComponent } from './components/book-result/book-result.component';
+import { ReviewStarsComponent } from './components/review-stars/review-stars.component';
+import {MatSliderModule} from "@angular/material/slider";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatLegacySliderModule} from "@angular/material/legacy-slider";
 
 @NgModule({
   declarations: [
@@ -55,6 +59,7 @@ import { BookResultComponent } from './components/book-result/book-result.compon
     GenreComponent,
     FooterComponent,
     BookResultComponent,
+    ReviewStarsComponent,
   ],
     imports: [
         BrowserModule,
@@ -69,6 +74,8 @@ import { BookResultComponent } from './components/book-result/book-result.compon
         MatButtonModule,
         MatSlideToggleModule,
         FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
         MatSelectModule,
         MatCheckboxModule,
         MatTooltipModule,
@@ -77,7 +84,8 @@ import { BookResultComponent } from './components/book-result/book-result.compon
         MatAutocompleteModule,
         ReactiveFormsModule,
         MatCardModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatSliderModule,
     ],
   providers: [],
   bootstrap: [AppComponent]

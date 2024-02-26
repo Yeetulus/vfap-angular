@@ -14,23 +14,23 @@ import {BookViewComponent} from "../../components/pages/book-view/book-view.comp
 import {BookResultsComponent} from "../../components/pages/book-results/book-results.component";
 
 const sidebarContentRoutes: Routes = [
-  { path: 'book-view', component: BookViewComponent,},
   { path: '', component: BookResultsComponent, },
 
 ];
 
 const mainContentRoutes: Routes = [
   { path: '', component: SidebarContentComponent, children: sidebarContentRoutes},
+  { path: 'book-view', component: BookViewComponent,},
   { path: 'loans', component: LoansComponent, canActivate: [AuthGuardService], data: {'requiredRole': UserRole.MEMBER}},
-  { path: 'reservations', component: ReservationsComponent, canActivate: [AuthGuardService], data: { 'requiredRole': UserRole.MEMBER } },
+  { path: 'reservations', component: ReservationsComponent, canActivate: [AuthGuardService], data: {'requiredRole': UserRole.MEMBER}},
 ];
 
 const routes: Routes = [
   { path: '', component: MainContentComponent, children: mainContentRoutes},
-  { path: 'librarian', component: LibrarianComponent},
-  { path: 'admin', component: AdminComponent},
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegistrationComponent },
+  { path: 'librarian', component: LibrarianComponent, canActivate: [AuthGuardService], data: {'requiredRole': UserRole.LIBRARIAN}},
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuardService], data: {'requiredRole': UserRole.ADMIN}},
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuardService], data: {'requiredRole': UserRole.MEMBER, 'invertedCheck': true}},
+  { path: 'register', component: RegistrationComponent, canActivate: [AuthGuardService], data: {'requiredRole': UserRole.MEMBER, 'invertedCheck': true}},
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

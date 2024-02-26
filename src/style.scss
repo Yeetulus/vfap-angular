@@ -1,7 +1,18 @@
 @use '@angular/material' as mat;
 
+$success-color: #96ff59;
+$fail-color: #e8304f;
 $primary-color: #ea1569;
 $primary-color-hover: #ff3c86;
+
+.text-primary-hover {
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: $primary-color !important;
+  }
+}
 
 .text-primary{
 
@@ -24,4 +35,31 @@ a.text-primary:hover{
   color: $primary-color-hover !important;
   font-weight: 600;
   letter-spacing: 1px;
+}
+
+.text-green-bold{
+  color: $success-color !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.text-red-bold{
+  color: $fail-color !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.scrollable-content{
+  height: 87%;
+  overflow-y: scroll;
+}
+.scrollable-content::-webkit-scrollbar {
+  width: 12px;
+}
+.scrollable-content::-webkit-scrollbar-thumb {
+  background-color: #4b4b4b;
+  border: 1px #363636;
+  border-radius: 6px;
+}
+.scrollable-content::-webkit-scrollbar-track {
+  background-color: transparent;
 }

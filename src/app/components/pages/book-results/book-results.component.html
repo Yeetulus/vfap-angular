@@ -1,6 +1,6 @@
 <div class="full-height content-body">
-  <div *ngIf="showBookResults && bookResults && bookResults.length > 0; else noBooks" class="content">
-    <app-book-result *ngFor="let book of displayedBooks()" [book]="book"></app-book-result>
+  <div *ngIf="showBookResults && bookResults && bookResults.length > 0; else noBooks" class="scrollable-content">
+    <app-book-result *ngFor="let book of displayedBooks()" [book]="book" (click)="showBookDetail(book)"></app-book-result>
   </div>
 <mat-paginator *ngIf="showBookResults" class="page-bottom" [length]="bookResults.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)" ></mat-paginator>
 

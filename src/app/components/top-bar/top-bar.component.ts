@@ -1,13 +1,14 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
 import {UserRole} from "../../models/auth/user-role";
-import {Book} from "../../models/book";
+import {Book} from "../../models/book/book";
 import {debounceTime, distinctUntilChanged, Observable, of, startWith, switchMap, take} from "rxjs";
 import {FormControl} from "@angular/forms";
 import {BookService} from "../../services/book/book.service";
 import {DomSanitizer} from "@angular/platform-browser";
 import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
+import {MatMenuTrigger} from "@angular/material/menu";
 
 @Component({
   selector: 'app-top-bar',
@@ -16,6 +17,7 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
   encapsulation: ViewEncapsulation.None,
 })
 export class TopBarComponent implements OnInit {
+  @ViewChild('menuTrigger') menuTrigger!: MatMenuTrigger;
 
   searchInputValue: string = "";
   waitingForSearchbar:boolean = false;
@@ -37,7 +39,6 @@ export class TopBarComponent implements OnInit {
             this.waitingForSearchbar = false;
             let trimmedValue = value.trim();
             if (trimmedValue !== '' && trimmedValue.length > 2) {
-              console.log(value.trim())
               return this.bookService.fetchSearchBarBooks(trimmedValue, undefined)
                 .pipe(
                   take(5)
@@ -134,5 +135,19 @@ export class TopBarComponent implements OnInit {
     //this.bookService.resetBookResults();
     this.bookService.hideBookResults();
     this.router.navigate(['']);
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  handlePersonIconClick() {
+    this.authService.isTokenValid().subscribe(value => {
+      if (!value) this.router.navigate(["/login"]);
+      else if (this.menuTrigger) {
+        this.menuTrigger.openMenu();
+      }
+    })
+
   }
 }
