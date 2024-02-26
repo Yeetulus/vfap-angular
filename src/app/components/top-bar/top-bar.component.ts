@@ -23,26 +23,32 @@ export class TopBarComponent implements OnInit {
   filteredBooks$: Observable<Book[]>;
 
   ngOnInit(): void {
-    this.filteredBooks$ = this.searchControl.valueChanges.pipe(source => {
-      this.waitingForSearchbar = true;
-      console.log("waiting for result");
-      return source.pipe(
-        startWith(''),
+    this.searchBarBehavior();
+  }
+
+  private searchBarBehavior() {
+    this.searchControl.valueChanges.subscribe(value => this.waitingForSearchbar = true);
+    this.filteredBooks$ = this.searchControl.valueChanges.pipe(
+        startWith(""),
         debounceTime(300),
         distinctUntilChanged(),
         switchMap(value => {
-          let trimmedValue = value.trim();
-          if (trimmedValue !== '' && trimmedValue.length > 2) {
-            console.log(value.trim())
-            return this.bookService.fetchBooks(value.toString(), undefined)
-              .pipe(
-                take(5)
-              );
-          } else {
-            return of([]);
+          if (this.waitingForSearchbar) {
+            this.waitingForSearchbar = false;
+            let trimmedValue = value.trim();
+            if (trimmedValue !== '' && trimmedValue.length > 2) {
+              console.log(value.trim())
+              return this.bookService.fetchSearchBarBooks(trimmedValue, undefined)
+                .pipe(
+                  take(5)
+                );
+            } else {
+              return of([]);
+            }
           }
+          else return of([]);
         }));
-    });
+
   }
 
   constructor(public authService: AuthService,
@@ -56,10 +62,8 @@ export class TopBarComponent implements OnInit {
     if (!book) {
       return '';
     }
-
     const searchValue = this.searchControl.value;
     const title = book.title;
-
     let highlightedTitle = title;
 
     if (searchValue && title.toLowerCase().includes(searchValue.toLowerCase())) {
@@ -78,7 +82,6 @@ export class TopBarComponent implements OnInit {
 
       return highlightedAuthor;
     });
-
     const displayedAuthors = authors.map(author => `<span>${author}</span>`).join(', ');
 
     return this.sanitizer.bypassSecurityTrustHtml(`
@@ -103,21 +106,32 @@ export class TopBarComponent implements OnInit {
   }
 
   onEnter() {
-    if (this.searchControl.value && this.searchControl.value.trim().length > 0) {
+    let searchInput = this.searchInputValue.trim();
+    if (searchInput.length > 0) {
 
-      if(this.waitingForSearchbar){
-        let equals = this.searchControl.value.trim() !== this.searchInputValue.trim()
-        if(!equals) this.bookService.fetchBooks(this.searchControl.value.toString(), undefined);
-      }
+      this.updateIfDebounceTimerActive(searchInput);
       this.searchControl.setValue('');
-      this.bookService.showBookResults();
       this.waitingForSearchbar = false;
       this.router.navigate([""])
     }
   }
+  private updateIfDebounceTimerActive(input:string) {
+    if (this.waitingForSearchbar) {
+      let equals = this.searchControl.value.trim() !== input
+      if (!equals) {
+        this.bookService.fetchSearchBarBooks(input, undefined).subscribe(value => {
+          this.bookService.showBookResults();
+        });
+      }
+    }
+    else{
+      this.bookService.showBookResults();
+    }
+    this.waitingForSearchbar = false;
+  }
 
   onLogoClick() {
-    this.bookService.resetBookResults();
+    //this.bookService.resetBookResults();
     this.bookService.hideBookResults();
     this.router.navigate(['']);
   }

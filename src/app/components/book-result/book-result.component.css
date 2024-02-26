@@ -1,0 +1,12 @@
+.book-result{
+  margin-bottom: 3px;
+  margin-right: 3px;
+
+  user-select: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, background-color 0.3s ease;
+}
+.book-result:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #696969;
+}

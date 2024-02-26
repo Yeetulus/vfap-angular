@@ -13,8 +13,8 @@ import { AdminComponent } from './components/pages/admin/admin.component';
 import { SidebarContentComponent } from './components/pages/sidebar-content/sidebar-content.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LibrarianComponent } from './components/pages/librarian/librarian.component';
-import { BookViewComponent } from './components/book-view/book-view.component';
-import { BookResultsComponent } from './components/book-results/book-results.component';
+import { BookViewComponent } from './components/pages/book-view/book-view.component';
+import { BookResultsComponent } from './components/pages/book-results/book-results.component';
 import {MatDividerModule} from "@angular/material/divider";
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -35,6 +35,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatCardModule} from "@angular/material/card";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { FooterComponent } from './components/footer/footer.component';
+import { BookResultComponent } from './components/book-result/book-result.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { FooterComponent } from './components/footer/footer.component';
     TopBarComponent,
     GenreComponent,
     FooterComponent,
+    BookResultComponent,
   ],
     imports: [
         BrowserModule,

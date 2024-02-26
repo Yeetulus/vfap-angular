@@ -3,7 +3,8 @@ import {Genre} from "../../models/genre";
 import {GenreService} from "../genre/genre.service";
 import {ApiService} from "../api/api.service";
 import {Book} from "../../models/book";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class BookService {
   private genres: Genre[];
   public selectedBookSubject = new BehaviorSubject<Book | null>(null);
   public bookResults: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
+  public searchBarBookResults: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
   constructor(private genreService: GenreService,
               private apiService: ApiService) {
     this.searchOnlyAvailable = false;
@@ -27,7 +29,10 @@ export class BookService {
     this.searchOnlyAvailable = value;
   }
 
-  public fetchBooks(term? :string, authorId?: number){
+  private getBooks(term? :string,
+                   authorId?: number,
+                   response?: ((value:Book[]) => Book[]),
+                   error?: (error: HttpErrorResponse, statusCode: number) => void){
     const url = "library/search"
     const genreIds = this.getGenreIds();
     const params = {
@@ -36,22 +41,36 @@ export class BookService {
       authorId: authorId? authorId : '',
       searchOnlyAvailable: this.searchOnlyAvailable
     };
-
-    let books = this.apiService.get<Book[]>(url, params, false, response => {
-      console.log("Fetched books", response);
-      return response;
-    }, (error, statusCode) => {
-      console.log("Error fetching books: " + error);
-      return [];
-    });
-
-    books.subscribe(value => {
-      this.bookResults.next(value);
-    })
-    return books;
+    return this.apiService.get<Book[]>(url, params, false, response, error);
 
   }
+  public fetchBooks(term? :string, authorId?: number){
 
+    let response = (bookResult: Book[]) =>{
+      console.log("Fetched books: ", bookResult)
+      this.bookResults.next(bookResult);
+      return bookResult;
+    }
+    let error = (error: HttpErrorResponse, statusCode: number) =>{
+      console.log("Error fetching books: " + error);
+      return [];
+    };
+    return this.getBooks(term, authorId, response, error);
+
+  }
+  public fetchSearchBarBooks(term? :string, authorId?: number){
+    let response = (bookResult: Book[]) =>{
+      console.log("Fetched books: ", bookResult)
+      this.searchBarBookResults.next(bookResult);
+      return bookResult;
+    }
+    let error = (error: HttpErrorResponse, statusCode: number) =>{
+      console.log("Error fetching books: " + error);
+      return [];
+    };
+    return this.getBooks(term, authorId, response, error);
+
+  }
 
   private getGenreIds(){
     let genreIds:number[] = [];
@@ -74,9 +93,11 @@ export class BookService {
 
   showBookResults() {
     this.updateShowResults(true);
+    this.bookResults.next(this.searchBarBookResults.value);
   }
   hideBookResults() {
     this.updateShowResults(false);
+    this.bookResults.next([]);
   }
   updateShowResults(value: boolean){
     this.showResults.next(value);

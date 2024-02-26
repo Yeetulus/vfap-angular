@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {Book} from "../../models/book";
-import {BookService} from "../../services/book/book.service";
+import {Book} from "../../../models/book";
+import {BookService} from "../../../services/book/book.service";
 import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-book-results',
   templateUrl: './book-results.component.html',
   styleUrls: ['./book-results.component.css',
-            '../../../styles.css']
+            '../../../../styles.css']
 })
 export class BookResultsComponent implements OnInit{
 

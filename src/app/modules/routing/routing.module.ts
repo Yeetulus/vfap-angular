@@ -10,8 +10,8 @@ import {LoansComponent} from "../../components/loans/loans.component";
 import {SidebarContentComponent} from "../../components/pages/sidebar-content/sidebar-content.component";
 import {AdminComponent} from "../../components/pages/admin/admin.component";
 import {LibrarianComponent} from "../../components/pages/librarian/librarian.component";
-import {BookViewComponent} from "../../components/book-view/book-view.component";
-import {BookResultsComponent} from "../../components/book-results/book-results.component";
+import {BookViewComponent} from "../../components/pages/book-view/book-view.component";
+import {BookResultsComponent} from "../../components/pages/book-results/book-results.component";
 
 const sidebarContentRoutes: Routes = [
   { path: 'book-view', component: BookViewComponent,},
