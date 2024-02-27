@@ -3,7 +3,7 @@ import {Genre} from "../../models/book/genre";
 import {GenreService} from "../genre/genre.service";
 import {ApiService} from "../api/api.service";
 import {Book} from "../../models/book/book";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ReviewComment} from "../../models/book/review-comment";
 
@@ -111,14 +111,4 @@ export class BookService {
     })
 
   }
-
-  leaveReview(newReview: {bookId: number, rating: number; comment: string}) {
-    const url = "member/review/create"
-    this.apiService.post<ReviewComment>(url, newReview, undefined, true, response => {
-
-    }, (error, statusCode) => {
-
-    });
-  }
-
 }

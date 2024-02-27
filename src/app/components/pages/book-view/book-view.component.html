@@ -12,6 +12,7 @@
                 <span>Available: </span><span class="{{availableCount!.valueOf() > 0? 'text-green-bold' : 'text-red-bold'}}">
                     {{availableCount!.valueOf()}}
                 </span>
+            <br>
           </ng-container>
         <div *ngIf="reviews">
             <p class="text-reviewer reviews-margin">Reviews</p>
@@ -23,6 +24,7 @@
                         <div class="rating-position">
                             <mat-icon [ngStyle]="{'color': 'yellow'}" class="star-icon">star</mat-icon>
                             <span class="text-icon">{{ review.rating + " / 5"}}</span>
+                            <mat-icon *ngIf="isSpecificUser(review.userId) | async" (click)="deleteReview(review.bookId)" style="margin-left: 8px" class="text-primary-hover">cancel</mat-icon>
                         </div>
                         <p>{{ review.comment }}</p>
                     </mat-card-content>
@@ -53,11 +55,13 @@
             </mat-card>
         </div>
         <div *ngIf="isValidMember()">
-            <ng-container *ngIf="availableCount !== undefined">
-                <span>Available: </span><span class="{{availableCount!.valueOf() > 0? 'text-green-bold' : 'text-red-bold'}}">
-                    {{availableCount!.valueOf()}}
-                </span>
-            </ng-container>
+          <p class="text-reviewer reviews-margin">Reviews</p>
+          <ng-container *ngIf="availableCount !== undefined">
+              <span>Available: </span><span class="{{availableCount!.valueOf() > 0? 'text-green-bold' : 'text-red-bold'}}">
+                  {{availableCount!.valueOf()}}
+              </span>
+              <button *ngIf="availableCount!.valueOf() > 0" mat-raised-button color="primary" (click)="createBookReservation()">Create reservation</button>
+          </ng-container>
 
         </div>
         <div class="bottom-spacing"></div>

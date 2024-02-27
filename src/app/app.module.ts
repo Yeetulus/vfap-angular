@@ -8,7 +8,7 @@ import { MainContentComponent } from './components/pages/main-content/main-conte
 import { LoginComponent } from './components/pages/login/login.component';
 import { RegistrationComponent } from './components/pages/registration/registration.component';
 import { ReservationsComponent } from './components/reservations/reservations.component';
-import { LoansComponent } from './components/loans/loans.component';
+import { LoansComponent } from './components/pages/loans/loans.component';
 import { AdminComponent } from './components/pages/admin/admin.component';
 import { SidebarContentComponent } from './components/pages/sidebar-content/sidebar-content.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -40,6 +40,7 @@ import { ReviewStarsComponent } from './components/review-stars/review-stars.com
 import {MatSliderModule} from "@angular/material/slider";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatLegacySliderModule} from "@angular/material/legacy-slider";
+import { LoanComponent } from './components/loan/loan.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import {MatLegacySliderModule} from "@angular/material/legacy-slider";
     FooterComponent,
     BookResultComponent,
     ReviewStarsComponent,
+    LoanComponent,
   ],
     imports: [
         BrowserModule,

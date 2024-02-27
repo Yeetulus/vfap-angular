@@ -60,6 +60,47 @@ export class ApiService {
 
   }
 
+  public put<T>(
+    endpoint: string,
+    data?: any,
+    params?: { [param: string]: any },
+    requiresAuthentication: boolean = false,
+    successCallback?: (response: T) => void,
+    errorCallback?: (error: HttpErrorResponse, statusCode: number) => void
+  ): Observable<T> {
+    const url = `${this.baseUrl}${endpoint}`;
+    let httpParams = this.createHttpParams(params);
+    let httpHeaders = this.createHeaders(requiresAuthentication, this.accessTokenName);
+    return this.http.put<T>(url, data, { headers: httpHeaders, params: httpParams}).pipe(
+      catchError((error: HttpErrorResponse) => this.handleCustomError(error, errorCallback)),
+      tap((response: T) => {
+        if (successCallback) {
+          successCallback(response);
+        }
+      })
+    );
+  }
+
+  public delete<T>(
+    endpoint: string,
+    params?: { [param: string]: any },
+    requiresAuthentication: boolean = false,
+    successCallback?: (response: T) => void,
+    errorCallback?: (error: HttpErrorResponse, statusCode: number) => void
+  ): Observable<T> {
+    const url = `${this.baseUrl}${endpoint}`;
+    let httpParams = this.createHttpParams(params);
+    let httpHeaders = this.createHeaders(requiresAuthentication, this.accessTokenName);
+    return this.http.delete<T>(url, { headers: httpHeaders, params: httpParams}).pipe(
+      catchError((error: HttpErrorResponse) => this.handleCustomError(error, errorCallback)),
+      tap((response: T) => {
+        if (successCallback) {
+          successCallback(response);
+        }
+      })
+    );
+  }
+
   public refreshToken<T>(
     endpoint: string,
     errorCallback?: (error: HttpErrorResponse, statusCode: number) => Observable<T>

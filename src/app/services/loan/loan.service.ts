@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ApiService} from "../api/api.service";
-import {Loan} from "../../models/book/loan";
+import {Loan} from "../../models/booking/loan";
 import {map} from "rxjs";
 
 @Injectable({

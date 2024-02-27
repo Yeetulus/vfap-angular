@@ -59,6 +59,7 @@ export class AuthService {
     ).subscribe();
   }
   authenticated(response:AuthResponse){
+    localStorage.setItem("userId", response.user_id.toString());
     localStorage.setItem(this.accessTokenName, response.access_token);
     localStorage.setItem(this.refreshTokenName, response.refresh_token);
     localStorage.setItem('userRole', response.role.toString());
@@ -76,8 +77,10 @@ export class AuthService {
   }
 
   logout(): void {
+    localStorage.removeItem("userId");
     localStorage.removeItem(this.accessTokenName);
     localStorage.removeItem(this.refreshTokenName);
+    localStorage.removeItem("userRole");
 
     this.router.navigate(['/login']);
   }
@@ -89,23 +92,21 @@ export class AuthService {
 
   isTokenValid(): Observable<boolean> {
     const accessToken = localStorage.getItem(this.accessTokenName);
-
     if (accessToken === null) {
+      localStorage.removeItem("userId");
+      localStorage.removeItem("userRole");
       return of(false);
     }
-
     const decodedToken = this.decodeJwt(accessToken);
-
     if (!decodedToken || !decodedToken.exp) {
       return of(false);
     }
-
     const currentTime = Math.floor(Date.now() / 1000);
-
     if (decodedToken.exp > currentTime) {
       return of(true);
     } else {
       localStorage.removeItem(this.accessTokenName);
+      localStorage.removeItem("userId");
       const refreshToken = localStorage.getItem(this.refreshTokenName);
 
       if (refreshToken) {
@@ -124,6 +125,7 @@ export class AuthService {
           })
         );
       } else {
+
         return of(false);
       }
     }

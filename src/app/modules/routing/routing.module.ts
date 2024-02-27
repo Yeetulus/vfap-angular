@@ -6,7 +6,7 @@ import {RegistrationComponent} from "../../components/pages/registration/registr
 import {LoginComponent} from "../../components/pages/login/login.component";
 import {UserRole} from "../../models/auth/user-role";
 import {ReservationsComponent} from "../../components/reservations/reservations.component";
-import {LoansComponent} from "../../components/loans/loans.component";
+import {LoansComponent} from "../../components/pages/loans/loans.component";
 import {SidebarContentComponent} from "../../components/pages/sidebar-content/sidebar-content.component";
 import {AdminComponent} from "../../components/pages/admin/admin.component";
 import {LibrarianComponent} from "../../components/pages/librarian/librarian.component";

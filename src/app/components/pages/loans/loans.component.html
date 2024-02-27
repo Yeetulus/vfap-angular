@@ -1,0 +1,15 @@
+<div class="page-margin">
+
+  <ng-container *ngIf="shownLoans.length > 0; else noLoans">
+    <h1 style="display: inline-block; padding-right: 10px">List of loans</h1>
+  </ng-container>
+  <mat-slide-toggle [ngModel]="showAll" color="primary" (ngModelChange)="changeShowAll()">Show returned loans</mat-slide-toggle>
+  <ng-template #noLoans>
+
+  </ng-template>
+  <ng-container *ngFor="let loan of shownLoans">
+    <app-loan [loan]="loan"></app-loan>
+  </ng-container>
+
+
+</div>

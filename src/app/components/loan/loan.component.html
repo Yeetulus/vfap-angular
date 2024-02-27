@@ -1,0 +1,19 @@
+<mat-card style="margin-bottom: 1px">
+
+  <mat-card-header>
+    <mat-card-title>{{loan.copy.book.title}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-container *ngFor="let author of loan.copy.book.authors">
+      <span>{{author.name}}</span>
+    </ng-container>
+    <ng-container *ngIf="loan.actualReturnDate !== null; else scheduledText">
+      <p>Date of return: {{ loan.actualReturnDate | date }}</p>
+    </ng-container>
+    <ng-template #scheduledText>
+      <p>Return deadline: <span class="{{isPastScheduledReturnDate() ? 'text-red-bold' : ''}}" >{{ loan.scheduledReturnDate | date:'dd. MM. yyyy' }}</span></p>
+    </ng-template>
+
+  </mat-card-content>
+
+</mat-card>
