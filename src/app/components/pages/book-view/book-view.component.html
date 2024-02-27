@@ -8,7 +8,7 @@
           </div><br>
           <span>Released: {{getDisplayedYear(selectedBook)}}</span><br>
           <span>Pages: {{ selectedBook.pages }}</span><br>
-          <ng-container *ngIf="availableCount !== undefined && !isValidMember()">
+          <ng-container *ngIf="availableCount !== undefined && !(authService.isAuthenticated(UserRole.MEMBER)|async)">
                 <span>Available: </span><span class="{{availableCount!.valueOf() > 0? 'text-green-bold' : 'text-red-bold'}}">
                     {{availableCount!.valueOf()}}
                 </span>
@@ -24,7 +24,7 @@
                         <div class="rating-position">
                             <mat-icon [ngStyle]="{'color': 'yellow'}" class="star-icon">star</mat-icon>
                             <span class="text-icon">{{ review.rating + " / 5"}}</span>
-                            <mat-icon *ngIf="isSpecificUser(review.userId) | async" (click)="deleteReview(review.bookId)" style="margin-left: 8px" class="text-primary-hover">cancel</mat-icon>
+                            <mat-icon *ngIf="isSpecificUser(review.userId) | async" (click)="deleteReview(review.bookId)" style="margin-left: 16px; color: #a8a8a8" class="text-primary-hover">cancel</mat-icon>
                         </div>
                         <p>{{ review.comment }}</p>
                     </mat-card-content>
@@ -54,13 +54,13 @@
                 </mat-card-content>
             </mat-card>
         </div>
-        <div *ngIf="isValidMember()">
+        <div *ngIf="authService.isAuthenticated(UserRole.MEMBER) | async">
           <p class="text-reviewer reviews-margin">Reviews</p>
           <ng-container *ngIf="availableCount !== undefined">
               <span>Available: </span><span class="{{availableCount!.valueOf() > 0? 'text-green-bold' : 'text-red-bold'}}">
                   {{availableCount!.valueOf()}}
               </span>
-              <button *ngIf="availableCount!.valueOf() > 0" mat-raised-button color="primary" (click)="createBookReservation()">Create reservation</button>
+              <br><button *ngIf="availableCount!.valueOf() > 0" style="margin-top: 8px" mat-raised-button color="primary" (click)="createBookReservation()">Create reservation</button>
           </ng-container>
 
         </div>

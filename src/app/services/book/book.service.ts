@@ -3,9 +3,9 @@ import {Genre} from "../../models/book/genre";
 import {GenreService} from "../genre/genre.service";
 import {ApiService} from "../api/api.service";
 import {Book} from "../../models/book/book";
-import {BehaviorSubject, map, Observable} from "rxjs";
+import {BehaviorSubject} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
-import {ReviewComment} from "../../models/book/review-comment";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,8 @@ export class BookService {
   public bookResults: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
   public searchBarBookResults: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
   constructor(private genreService: GenreService,
-              private apiService: ApiService) {
+              private apiService: ApiService,
+              private router: Router) {
     this.searchOnlyAvailable = false;
     this.genres = [];
     genreService.genreSubject.subscribe(value => {
@@ -110,5 +111,14 @@ export class BookService {
       console.log(error);
     })
 
+  }
+  searchBooks(name?: string, authorId?: number) {
+    this.fetchBooks(name, authorId).subscribe()
+    this.showBookResults();
+    this.router.navigate([""]);
+  }
+  navigateToBookDetail(book:Book){
+    this.selectBook(book);
+    this.router.navigate(['/book-view']);
   }
 }

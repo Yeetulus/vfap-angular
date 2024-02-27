@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {Book} from "../../../models/book/book";
 import {BookService} from "../../../services/book/book.service";
 import {getDisplayedYear} from "../../../utils/date-utils";
@@ -11,9 +11,8 @@ import {ReviewComment} from "../../../models/book/review-comment";
 import {FormControl} from "@angular/forms";
 import {AuthService} from "../../../services/auth/auth.service";
 import {UserRole} from "../../../models/auth/user-role";
-import {async, combineLatest, concatMap, filter, first, forkJoin, map, of, take} from "rxjs";
+import {map} from "rxjs";
 import {LoanService} from "../../../services/loan/loan.service";
-import {__values} from "tslib";
 import {ReservationService} from "../../../services/reservation/reservation.service";
 
 @Component({
@@ -58,12 +57,16 @@ export class BookViewComponent implements OnInit {
         this.bookService.getAvailability(value.id).subscribe(_value => {
           this.availableCount = _value;
         });
-        const isValidMember$ = this.isValidMember();
-        const getLoanCreated$ = this.loanService.getLoanCreated(value.id);
-
-        forkJoin([isValidMember$, getLoanCreated$]).subscribe(([isValidMemberValue, getLoanCreatedValue]) => {
-          this.enableReview = isValidMemberValue && getLoanCreatedValue;
-        });
+        this.authService.isAuthenticated(UserRole.MEMBER).subscribe(value1 => {
+          let result = value1;
+          if (result) {
+            this.loanService.getLoanCreated(value.id).subscribe(value2 => {
+              this.enableReview = result && value2;
+            });
+          } else {
+            this.enableReview = false;
+          }
+        })
       }
     });
   }
@@ -71,15 +74,11 @@ export class BookViewComponent implements OnInit {
   protected readonly getDisplayedYear = getDisplayedYear;
 
   searchAuthorBooks(authorId: number) {
-    this.bookService.fetchBooks(undefined, authorId);
-    this.bookService.showBookResults();
-    this.router.navigate([""]);
+    this.bookService.searchBooks(undefined, authorId);
   }
 
   searchGenreBooks(genre: Genre) {
-    this.bookService.fetchBooks(genre.name, undefined);
-    this.bookService.showBookResults();
-    this.router.navigate([""]);
+    this.bookService.searchBooks(genre.name, undefined);
   }
 
   updatePagedReviews(): void {
@@ -122,18 +121,11 @@ export class BookViewComponent implements OnInit {
     }
 
   }
-
   protected readonly UserRole = UserRole;
-
-  isValidMember() {
-    return this.authService.isTokenValid().pipe(
-      map(value => value && this.authService.getUserRole()?.valueOf() === UserRole.MEMBER)
-    );
-  }
 
   isSpecificUser(userId: number) {
     const idMatches = parseInt(localStorage.getItem("userId")!) === userId;
-    return this.isValidMember().pipe(map(value => {
+    return this.authService.isAuthenticated(UserRole.MEMBER).pipe(map(value => {
       if(!value) return false;
       else return value && idMatches;
     }));

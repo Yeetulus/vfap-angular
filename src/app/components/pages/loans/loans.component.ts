@@ -36,6 +36,5 @@ export class LoansComponent implements OnInit{
     else{
       this.shownLoans = this.loans;
     }
-    console.log(this.shownLoans);
   }
 }

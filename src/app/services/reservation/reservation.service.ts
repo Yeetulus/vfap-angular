@@ -21,7 +21,7 @@ export class ReservationService {
       return response;
     }, (error, statusCode) => {
       console.log(statusCode, "Error creating reservation", error);
-      this.notificationService.showNotification("Cannot create reservation", NotificationType.Error);
+      this.notificationService.showNotification(error.error, NotificationType.Error);
       return error;
     })
   }

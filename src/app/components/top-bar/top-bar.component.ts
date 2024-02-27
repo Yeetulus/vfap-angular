@@ -132,7 +132,6 @@ export class TopBarComponent implements OnInit {
   }
 
   onLogoClick() {
-    //this.bookService.resetBookResults();
     this.bookService.hideBookResults();
     this.router.navigate(['']);
   }

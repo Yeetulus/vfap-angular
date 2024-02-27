@@ -18,8 +18,8 @@
   </button>
   <div #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu"></div>
   <mat-menu #menu="matMenu" >
-    <button class="menu-button text-primary-hover" mat-menu-item *ngIf="(authService.isTokenValid() | async) && authService.getUserRole() === UserRole.MEMBER" (click)="router.navigate(['/loans'])">Loans</button>
-    <button class="menu-button text-primary-hover" mat-menu-item *ngIf="(authService.isTokenValid() | async) && authService.getUserRole() === UserRole.MEMBER" (click)="router.navigate(['/reservations'])">Reservations</button>
+    <button class="menu-button text-primary-hover" mat-menu-item *ngIf="authService.isAuthenticated(UserRole.MEMBER) | async" (click)="router.navigate(['/loans'])">Loans</button>
+    <button class="menu-button text-primary-hover" mat-menu-item *ngIf="authService.isAuthenticated(UserRole.MEMBER) | async" (click)="router.navigate(['/reservations'])">Reservations</button>
     <hr *ngIf="(authService.isTokenValid() | async)">
     <button class="menu-button" mat-menu-item *ngIf="(authService.isTokenValid() | async)" (click)="logout()">
       <span class="text-primary-bold">Logout</span>

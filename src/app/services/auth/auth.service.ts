@@ -9,6 +9,7 @@ import {ApiService} from "../api/api.service";
 import {UserRole} from "../../models/auth/user-role";
 import {NotificationService} from "../notification/notification.service";
 import {NotificationType} from "../../models/notification";
+import {User} from "../../models/auth/user";
 
 @Injectable({
   providedIn: 'root',
@@ -90,10 +91,14 @@ export class AuthService {
     return this.apiService.refreshToken<AuthResponse>(`${this.authUrl}refresh-token`,  )
   }
 
+  isAuthenticated(role? :UserRole){
+    return of(this.isTokenValid() && this.getUserRole() === role);
+  }
   isTokenValid(): Observable<boolean> {
     const accessToken = localStorage.getItem(this.accessTokenName);
     if (accessToken === null) {
       localStorage.removeItem("userId");
+      localStorage.removeItem(this.refreshTokenName);
       localStorage.removeItem("userRole");
       return of(false);
     }
@@ -112,13 +117,8 @@ export class AuthService {
       if (refreshToken) {
         return this.refreshToken().pipe(
           map((response) => {
-            if (response.access_token) {
-              localStorage.setItem(this.accessTokenName, response.access_token);
-              return true;
-            } else {
-              localStorage.removeItem(this.refreshTokenName)
-              return false;
-            }
+            this.authenticated(response);
+            return true;
           }),
           catchError(() => {
             return of(false);
