@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {RegistrationRequest} from "../../../models/auth/registration-request";
-import {AuthResponse} from "../../../models/auth/auth-response";
 import {AuthRequest} from "../../../models/auth/auth-request";
 import {AuthService} from "../../../services/auth/auth.service";
 
@@ -20,8 +19,4 @@ export class LoginComponent {
     this.authService.login(request);
   }
 
-  register(): void {
-    const request: RegistrationRequest = { firstName: '', lastName: '', email: this.username, password: this.password };
-    this.authService.registerUser(request);
-  }
 }

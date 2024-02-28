@@ -1,0 +1,13 @@
+.logo {
+  font-size: 24px;
+  font-weight: bolder;
+  letter-spacing: 2px;
+}
+
+button{
+  padding: 15px 20px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

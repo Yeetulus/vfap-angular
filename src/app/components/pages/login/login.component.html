@@ -2,15 +2,16 @@
   <h1>Login</h1>
   <div>
     <form>
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
       </mat-form-field>
       <br>
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
       </mat-form-field>
       <br>
-      <a class="text-primary" routerLink="/register">Register</a><br>
+      <a class="text-primary" routerLink="/register">Sign up</a><br>
+      <a class="text-primary" routerLink="">Continue without registration</a><br>
       <button mat-raised-button class="button-space" color="primary" (click)="login()">Login</button>
     </form>
   </div>

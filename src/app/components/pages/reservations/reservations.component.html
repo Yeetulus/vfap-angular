@@ -1,13 +1,13 @@
 <div style="height: 90%" class="page-margin">
 
   <ng-container *ngIf="reservations.length > 0; else noReservations">
-    <h1 style="display: inline-block; padding-right: 10px">List of loans</h1>
+    <h1 style="display: inline-block; padding-right: 10px">List of reservations</h1>
   </ng-container>
   <ng-template #noReservations>
     <h3>You have no reservations.</h3>
   </ng-template>
   <div class="scrollable-content">
-    <mat-card *ngFor="let reservation of reservations">
+    <mat-card class="scale-on-hover" style="margin-bottom: 2px;" *ngFor="let reservation of reservations">
       <mat-card-header>
         <mat-card-title class="text-primary-hover" (click)="navigateToBook(reservation.book)">
           {{reservation.book.title}}

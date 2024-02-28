@@ -1,1 +1,10 @@
-<p>librarian works!</p>
+<mat-toolbar color="warn">
+  <button mat-button (click)="onLogoClick()"><span class="logo"><span style="color: black">Web</span><span style="color: white">Librarian</span></span></button>
+  <button mat-button>Loans</button>
+
+  <div class="spacer"></div>
+  <button mat-icon-button (click)="logout()">
+    <mat-icon>person</mat-icon>
+  </button>
+
+</mat-toolbar>

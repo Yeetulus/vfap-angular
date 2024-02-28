@@ -41,6 +41,7 @@ import {MatSliderModule} from "@angular/material/slider";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatLegacySliderModule} from "@angular/material/legacy-slider";
 import { LoanComponent } from './components/loan/loan.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { LoanComponent } from './components/loan/loan.component';
         MatCardModule,
         MatPaginatorModule,
         MatSliderModule,
+        MatTabsModule,
     ],
   providers: [],
   bootstrap: [AppComponent]

@@ -9,8 +9,6 @@ import {ApiService} from "../api/api.service";
 import {UserRole} from "../../models/auth/user-role";
 import {NotificationService} from "../notification/notification.service";
 import {NotificationType} from "../../models/notification";
-import {User} from "../../models/auth/user";
-import {parseJsonSchemaToOptions} from "@angular/cli/src/command-builder/utilities/json-schema";
 
 @Injectable({
   providedIn: 'root',
@@ -24,12 +22,13 @@ export class AuthService {
 
   registerUser(request: RegistrationRequest) {
     this.apiService.post<AuthResponse>(
-      `${this.authUrl}register-user`,
+      `${this.authUrl}login/register-user`,
       request,
       undefined,
       false,
       (response: AuthResponse) => {
         console.log('Registration successful:', response);
+        this.notificationService.showNotification("Registration successful", NotificationType.Success);
         this.authenticated(response);
       },
       (error: HttpErrorResponse, statusCode: number) => {
@@ -51,7 +50,6 @@ export class AuthService {
         console.log('Authentication successful:', response);
         this.notificationService.showNotification("Logged in", NotificationType.Success);
         this.authenticated(response);
-        this.router.navigate([""]);
       },
       (error: HttpErrorResponse, statusCode: number) => {
 
@@ -65,17 +63,17 @@ export class AuthService {
     localStorage.setItem(this.accessTokenName, response.access_token);
     localStorage.setItem(this.refreshTokenName, response.refresh_token);
     localStorage.setItem('userRole', response.role.toString());
-    switch (response.role){
-      case UserRole.LIBRARIAN:
-        this.router.navigate(['/librarian']);
-        break;
-      case UserRole.ADMIN:
-        this.router.navigate(['/admin']);
-        break;
-      case UserRole.MEMBER:
-        this.router.navigate(['']);
-        break;
+
+    let routeValue = ''
+    if(response.role.toString() === UserRole[UserRole.LIBRARIAN]){
+      routeValue = "/librarian";
     }
+    if(response.role.toString() === UserRole[UserRole.ADMIN]){
+      routeValue = "/admin";
+    }
+    console.log("path", routeValue);
+    this.router.navigate([routeValue]);
+
   }
 
   logout(): void {
@@ -154,8 +152,37 @@ export class AuthService {
   }
 
   rolesMatch(requiredRole: UserRole|null, userRole: UserRole|null){
-    return requiredRole && userRole && userRole === requiredRole;
+    return requiredRole !== null && userRole !== null && userRole.valueOf() === requiredRole.valueOf();
   }
 
+  forceChangePassword(email: string, newPassword:string) {
+    const url = "admin/change-password";
+    const data = {
+      "email": email,
+      "newPassword": newPassword
+    }
+    return this.apiService.put<void>(url, data, {}, true, response => {
+      this.notificationService.showNotification(`Password for email ${email} was changed`, NotificationType.Success);
+      console.log("Password changed for: ", email);
+    }, error => {
+      this.notificationService.showNotification(`Error changing password`, NotificationType.Error);
+      console.error(error);
+    });
+  }
 
+  registerLibrarian(firstname: string, lastname: string, email : string, password: string) {
+    const url = "admin/register-librarian";
+    const data = {
+      "email": email,
+      "firstname": firstname,
+      "lastname": lastname,
+      "password": password,
+    }
+    return this.apiService.post<AuthResponse>(url, data, {}, true, response => {
+      this.notificationService.showNotification(`Registered new librarian ${email}`, NotificationType.Success);
+    }, error => {
+      this.notificationService.showNotification("Could not create librarian account", NotificationType.Error);
+      console.error(error);
+    });
+  }
 }

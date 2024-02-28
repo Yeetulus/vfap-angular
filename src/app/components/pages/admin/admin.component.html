@@ -1,1 +1,73 @@
-<p>admin works!</p>
+<mat-toolbar>
+  <div class="spacer"></div>
+  <button style="z-index: 100" mat-icon-button [matTooltip]="'Logout'" (click)="logout()">
+    <mat-icon>person</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-tab-group class="mat-tab-padding" [mat-stretch-tabs]="false" mat-align-tabs="start">
+  <mat-tab label="Password">
+    <div class="top-margin-content">
+        <form [formGroup]="changePasswordForm" (ngSubmit)="onSubmitPassword()">
+          <mat-form-field class="form-field-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" required>
+          </mat-form-field><br>
+
+          <mat-form-field class="form-field-width {{hasErrorClass()}}" appearance="outline">
+            <mat-label>New Password</mat-label>
+            <input matInput formControlName="newPassword" type="password">
+            <mat-error style="display: inline-block" *ngIf="changePasswordForm.get('newPassword')?.hasError('pattern')">
+              1 digit, lowercase, uppercase letter, special character.
+            </mat-error>
+            <mat-error style="display: inline-block" *ngIf="changePasswordForm.get('newPassword')?.hasError('minlength')">
+              New password must be at least 6 characters long.
+            </mat-error>
+          </mat-form-field><br>
+
+          <mat-form-field class="form-field-width" appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput formControlName="confirmPassword" type="password">
+            <mat-error *ngIf="changePasswordForm.get('confirmPassword')?.hasError('mismatch')">
+              Passwords do not match.
+            </mat-error>
+          </mat-form-field><br>
+
+          <button mat-raised-button color="primary" type="submit">Change Password</button>
+        </form>
+    </div>
+  </mat-tab>
+  <mat-tab label="Librarian Account">
+    <div class="top-margin-content">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
+        <mat-form-field class="form-field-width" appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstname" required>
+        </mat-form-field><br>
+
+        <mat-form-field class="form-field-width" appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastname" required>
+        </mat-form-field><br>
+
+        <mat-form-field class="form-field-width" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" required>
+        </mat-form-field><br>
+
+        <mat-form-field class="form-field-width" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" required>
+        </mat-form-field><br>
+
+        <mat-form-field class="form-field-width" appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput formControlName="confirmPassword" type="password" required>
+        </mat-form-field><br>
+
+        <button mat-raised-button color="primary" type="submit">Register</button>
+      </form>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>

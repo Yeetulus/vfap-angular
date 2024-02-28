@@ -1,1 +1,29 @@
-<p>registration works!</p>
+<div class="space">
+  <h1>Register</h1>
+  <div>
+    <form>
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Email" [(ngModel)]="email" name="username" required>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Firstname" [(ngModel)]="firstname" name="firstname" required>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline">
+        <input matInput placeholder="Lastname" [(ngModel)]="lastname" name="lastname" required>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline">
+        <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline">
+        <input matInput type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" name="password" required>
+      </mat-form-field>
+      <br>
+      <a class="text-primary" routerLink="/login">Already registered? Log in!</a><br>
+      <button mat-raised-button class="button-space" color="primary" (click)="register()">Register</button>
+    </form>
+  </div>
+</div>

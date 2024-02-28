@@ -20,7 +20,7 @@
   <mat-menu #menu="matMenu" >
     <button class="menu-button text-primary-hover" mat-menu-item *ngIf="authService.isAuthenticated(UserRole.MEMBER) | async" (click)="router.navigate(['/loans'])">Loans</button>
     <button class="menu-button text-primary-hover" mat-menu-item *ngIf="authService.isAuthenticated(UserRole.MEMBER) | async" (click)="router.navigate(['/reservations'])">Reservations</button>
-    <hr *ngIf="(authService.isTokenValid() | async)">
+    <hr *ngIf="(authService.isAuthenticated(UserRole.MEMBER) | async)">
     <button class="menu-button" mat-menu-item *ngIf="(authService.isTokenValid() | async)" (click)="logout()">
       <span class="text-primary-bold">Logout</span>
     </button>
