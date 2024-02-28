@@ -25,4 +25,29 @@ export class ReservationService {
       return error;
     })
   }
+
+  getReservations() {
+    const url = "member/reservation/get-all";
+    return this.apiService.get<Reservation[]>(url, {}, true, response => {
+      console.log("Fetched reservations", response);
+    }, error => {
+      console.log("Error fetching reservations", error);
+    });
+
+  }
+
+  cancelReservation(reservation: Reservation) {
+    const url = "member/reservation/cancel";
+    const params = {
+      "bookId": reservation.book.id.toString()
+    }
+    return this.apiService.delete<boolean>(url, params, true, response => {
+      this.notificationService.showNotification("Reservations has been canceled", NotificationType.Success);
+      return true;
+    }, error => {
+      this.notificationService.showNotification("Cannot cancel reservation", NotificationType.Error);
+      return false;
+    })
+
+  }
 }

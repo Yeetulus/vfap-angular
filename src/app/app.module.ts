@@ -7,7 +7,7 @@ import {RouterOutlet} from "@angular/router";
 import { MainContentComponent } from './components/pages/main-content/main-content.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { RegistrationComponent } from './components/pages/registration/registration.component';
-import { ReservationsComponent } from './components/reservations/reservations.component';
+import { ReservationsComponent } from './components/pages/reservations/reservations.component';
 import { LoansComponent } from './components/pages/loans/loans.component';
 import { AdminComponent } from './components/pages/admin/admin.component';
 import { SidebarContentComponent } from './components/pages/sidebar-content/sidebar-content.component';

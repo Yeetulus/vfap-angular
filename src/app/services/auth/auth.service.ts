@@ -10,6 +10,7 @@ import {UserRole} from "../../models/auth/user-role";
 import {NotificationService} from "../notification/notification.service";
 import {NotificationType} from "../../models/notification";
 import {User} from "../../models/auth/user";
+import {parseJsonSchemaToOptions} from "@angular/cli/src/command-builder/utilities/json-schema";
 
 @Injectable({
   providedIn: 'root',

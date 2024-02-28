@@ -1,0 +1,22 @@
+<div style="height: 90%" class="page-margin">
+
+  <ng-container *ngIf="reservations.length > 0; else noReservations">
+    <h1 style="display: inline-block; padding-right: 10px">List of loans</h1>
+  </ng-container>
+  <ng-template #noReservations>
+    <h3>You have no reservations.</h3>
+  </ng-template>
+  <div class="scrollable-content">
+    <mat-card *ngFor="let reservation of reservations">
+      <mat-card-header>
+        <mat-card-title class="text-primary-hover" (click)="navigateToBook(reservation.book)">
+          {{reservation.book.title}}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <span *ngFor="let author of reservation.book.authors" class="text-primary-hover" (click)="navigateToBooksOfAuthor(author.name)">{{author.name}}</span>
+        <button class="button-right-position" mat-raised-button color="primary" (click)="cancelReservation(reservation)">Cancel reservation</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

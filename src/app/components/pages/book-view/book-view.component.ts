@@ -40,8 +40,7 @@ export class BookViewComponent implements OnInit {
               private reviewService: ReviewService,
               public authService: AuthService,
               private loanService: LoanService,
-              private reservationService: ReservationService,
-              private router: Router) {
+              private reservationService: ReservationService) {
     this.selectedBook = null;
     this.enableReview = false;
   }
@@ -144,6 +143,8 @@ export class BookViewComponent implements OnInit {
   }
 
   createBookReservation() {
-    this.reservationService.createReservation(this.selectedBook!.id).subscribe();
+    this.reservationService.createReservation(this.selectedBook!.id).subscribe(value => {
+      this.availableCount = this.availableCount!.valueOf() - 1;
+    });
   }
 }
