@@ -31,7 +31,7 @@ export class BookService {
     this.searchOnlyAvailable = value;
   }
 
-  private getBooks(term? :string,
+  public getBooks(term? :string,
                    authorId?: number,
                    response?: ((value:Book[]) => Book[]),
                    error?: (error: HttpErrorResponse, statusCode: number) => void){

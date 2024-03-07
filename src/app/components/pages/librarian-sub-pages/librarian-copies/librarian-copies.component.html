@@ -1,0 +1,39 @@
+<div class="page-margin" style="height: 100%">
+    <div>
+        <app-search-bar placeholder="Type in book title" inputType="text" (searchQueryChanged)="searchBooks($event)" (searchSubmit)="searchBooksSubmit($event)" [autocompleteRef]="auto"></app-search-bar>
+
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let book of bookResults" [value]="book.title" (click)="selectBook(book)">
+                {{ book.title }}
+            </mat-option>
+        </mat-autocomplete>
+    </div>
+    <div class="scrollable-content" style="height: 71% ; margin-right: -15px">
+        <ng-container *ngFor="let copy of copies">
+            <mat-card style="margin-top: 2px; margin-right: 3px">
+                <mat-card-header>
+                    <mat-card-title>{{"#" + copy.id +" " + copy.book.title}}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>{{copy.bookCondition.toString()}}</p>
+                    <div *ngIf="copy.bookCondition.toString() === CopyCondition[CopyCondition.AVAILABLE]; else empty" style="position: absolute; top: 5px; right: 5px; display: flex; align-items: center;">
+                        <button matTooltip="Create loan" color="primary" mat-icon-button (click)="createLoan(copy)">
+                            <mat-icon>add_circle</mat-icon>
+                        </button>
+                        <button matTooltip="Eliminate copy" color="primary" mat-icon-button (click)="eliminateCopy(copy)">
+                            <mat-icon>remove_circle</mat-icon>
+                        </button>
+                    </div>
+                    <ng-template #empty>
+                        <div style="position: absolute; top: 5px; right: 5px; display: flex; align-items: center;">
+
+                        </div>
+                    </ng-template>
+                </mat-card-content>
+
+            </mat-card>
+
+        </ng-container>
+    </div>
+
+</div>

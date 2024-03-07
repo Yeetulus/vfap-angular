@@ -4,12 +4,12 @@ import {CopyCondition} from "./copy-condition";
 export class BookCopy{
     id:number;
     book: Book;
-    condition: CopyCondition;
+    bookCondition: CopyCondition;
 
     constructor(id:number, book:Book, condition: CopyCondition) {
         this.id = id;
         this.book = book;
-        this.condition = condition;
+        this.bookCondition = condition;
     }
 
 }

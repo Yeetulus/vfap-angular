@@ -39,9 +39,16 @@ import { BookResultComponent } from './components/book-result/book-result.compon
 import { ReviewStarsComponent } from './components/review-stars/review-stars.component';
 import {MatSliderModule} from "@angular/material/slider";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatLegacySliderModule} from "@angular/material/legacy-slider";
 import { LoanComponent } from './components/loan/loan.component';
 import {MatTabsModule} from "@angular/material/tabs";
+import { LibrarianLoansComponent } from './components/pages/librarian-sub-pages/librarian-loans/librarian-loans.component';
+import { LibrarianGenresComponent } from './components/pages/librarian-sub-pages/librarian-genres/librarian-genres.component';
+import { LibrarianBooksComponent } from './components/pages/librarian-sub-pages/librarian-books/librarian-books.component';
+import { LibrarianAuthorsComponent } from './components/pages/librarian-sub-pages/librarian-authors/librarian-authors.component';
+import { LibrarianCopiesComponent } from './components/pages/librarian-sub-pages/librarian-copies/librarian-copies.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { ModalComponent } from './components/modal/modal.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -63,6 +70,13 @@ import {MatTabsModule} from "@angular/material/tabs";
     BookResultComponent,
     ReviewStarsComponent,
     LoanComponent,
+    LibrarianLoansComponent,
+    LibrarianGenresComponent,
+    LibrarianBooksComponent,
+    LibrarianAuthorsComponent,
+    LibrarianCopiesComponent,
+    SearchBarComponent,
+    ModalComponent,
   ],
     imports: [
         BrowserModule,
@@ -72,6 +86,7 @@ import {MatTabsModule} from "@angular/material/tabs";
         HttpClientModule,
         MatDividerModule,
         MatToolbarModule,
+        MatDialogModule,
         MatInputModule,
         MatIconModule,
         MatButtonModule,

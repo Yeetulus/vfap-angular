@@ -11,7 +11,7 @@
       <p>Date of return: {{ loan.actualReturnDate | date: 'dd. MM. yyyy' }}</p>
     </ng-container>
     <ng-template #scheduledText>
-      <p>Return deadline: <span class="{{isPastScheduledReturnDate() ? 'text-red-bold' : ''}}" >{{ loan.scheduledReturnDate | date:'dd. MM. yyyy' }}</span></p>
+      <p>Return deadline: <span class="{{isPastScheduledReturnDate(loan) ? 'text-red-bold' : ''}}" >{{ loan.scheduledReturnDate | date:'dd. MM. yyyy' }}</span></p>
     </ng-template>
 
   </mat-card-content>

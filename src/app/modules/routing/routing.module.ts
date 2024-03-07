@@ -12,6 +12,21 @@ import {LibrarianComponent} from "../../components/pages/librarian/librarian.com
 import {BookViewComponent} from "../../components/pages/book-view/book-view.component";
 import {BookResultsComponent} from "../../components/pages/book-results/book-results.component";
 import {UserRole} from "../../models/auth/user-role";
+import {
+  LibrarianLoansComponent
+} from "../../components/pages/librarian-sub-pages/librarian-loans/librarian-loans.component";
+import {
+  LibrarianGenresComponent
+} from "../../components/pages/librarian-sub-pages/librarian-genres/librarian-genres.component";
+import {
+  LibrarianBooksComponent
+} from "../../components/pages/librarian-sub-pages/librarian-books/librarian-books.component";
+import {
+  LibrarianAuthorsComponent
+} from "../../components/pages/librarian-sub-pages/librarian-authors/librarian-authors.component";
+import {
+  LibrarianCopiesComponent
+} from "../../components/pages/librarian-sub-pages/librarian-copies/librarian-copies.component";
 
 const sidebarContentRoutes: Routes = [
   { path: '', component: BookResultsComponent, },
@@ -25,9 +40,17 @@ const mainContentRoutes: Routes = [
   { path: 'reservations', component: ReservationsComponent, canActivate: [AuthGuardService], data: {'requiredRole': UserRole.MEMBER}},
 ];
 
+const librarianContentRoutes: Routes = [
+  { path: '', component: LibrarianLoansComponent},
+  { path: 'genres', component: LibrarianGenresComponent},
+  { path: 'books', component: LibrarianBooksComponent},
+  { path: 'authors', component: LibrarianAuthorsComponent},
+  { path: 'copies', component: LibrarianCopiesComponent},
+];
+
 const routes: Routes = [
   { path: '', component: MainContentComponent, children: mainContentRoutes},
-  { path: 'librarian', component: LibrarianComponent, canActivate: [AuthGuardService], data: {'requiredRole': UserRole.LIBRARIAN}},
+  { path: 'librarian', component: LibrarianComponent, children: librarianContentRoutes, canActivate: [AuthGuardService], data: {'requiredRole': UserRole.LIBRARIAN}},
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuardService], data: {'requiredRole': UserRole.ADMIN}},
   { path: 'login', component: LoginComponent, canActivate: [AuthGuardService], data: {'invertedCheck': true}},
   { path: 'register', component: RegistrationComponent, canActivate: [AuthGuardService], data: {'invertedCheck': true}},

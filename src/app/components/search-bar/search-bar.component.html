@@ -1,0 +1,9 @@
+<div class="search-bar">
+  <mat-form-field appearance="outline">
+    <mat-icon matPrefix>search</mat-icon>
+    <input *ngIf="autocompleteRef; else noAutocomplete" matInput [type]="inputType" [placeholder]="placeholder" [(ngModel)]="searchQuery" (input)="onSearchQueryChanged()" (keyup.enter)="submitSearch()" [matAutocomplete]="autocompleteRef!">
+    <ng-template #noAutocomplete>
+      <input  matInput [type]="inputType" [placeholder]="placeholder" [(ngModel)]="searchQuery" (input)="onSearchQueryChanged()" >
+    </ng-template>
+  </mat-form-field>
+</div>

@@ -1,10 +1,32 @@
-<mat-toolbar color="warn">
+<div style="height: 98vh">
+<mat-toolbar color="primary">
   <button mat-button (click)="onLogoClick()"><span class="logo"><span style="color: black">Web</span><span style="color: white">Librarian</span></span></button>
-  <button mat-button>Loans</button>
+  <ng-container *ngIf="!isSmallScreen">
+    <button mat-button (click)="loansButtonClicked()">Loans</button>
+    <button mat-button (click)="genresButtonClicked()">Genres</button>
+    <button mat-button (click)="copiesButtonClicked()">Copies</button>
+    <button mat-button (click)="booksButtonClicked()">Books</button>
+    <button mat-button (click)="authorsButtonClicked()">Authors</button>
+  </ng-container>
 
   <div class="spacer"></div>
-  <button mat-icon-button (click)="logout()">
+  <button mat-icon-button [matTooltip]="isSmallScreen ? 'Open Menu' : 'Logout'" (click)="handlePersonIconClick()">
     <mat-icon>person</mat-icon>
   </button>
+  <div #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu"></div>
+  <mat-menu #menu="matMenu" >
+
+    <button class="menu-button" (click)="loansButtonClicked()" mat-menu-item>Loans</button>
+    <button class="menu-button" (click)="genresButtonClicked()" mat-menu-item>Genres</button>
+    <button class="menu-button" (click)="copiesButtonClicked()" mat-menu-item>Copies</button>
+    <button class="menu-button" (click)="booksButtonClicked()" mat-menu-item>Books</button>
+    <button class="menu-button" (click)="authorsButtonClicked()" mat-menu-item>Authors</button>
+    <hr>
+    <button class="menu-button" mat-menu-item (click)="logout()">
+      <span class="text-primary-bold">Logout</span>
+    </button>
+  </mat-menu>
 
 </mat-toolbar>
+<router-outlet></router-outlet>
+</div>

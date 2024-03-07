@@ -1,0 +1,14 @@
+<div class="modal-style">
+
+<h2>{{ data.title }}</h2>
+<form (ngSubmit)="onSubmit()">
+    <div *ngFor="let field of data.fields">
+        <mat-form-field>
+            <input matInput [type]="field.type" [(ngModel)]="formData[field.name]" [placeholder]="field.placeholder" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+    </div>
+    <button mat-raised-button type="submit">Submit</button>
+    <button mat-raised-button (click)="onCancel()">Cancel</button>
+</form>
+
+</div>

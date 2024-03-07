@@ -7,7 +7,7 @@ import {Book} from "../../../models/book/book";
 @Component({
   selector: 'app-reservations',
   templateUrl: './reservations.component.html',
-  styleUrls: ['./reservations.component.css']
+  styleUrls: ['./reservations.component.css', '../../../../style.scss']
 })
 export class ReservationsComponent implements OnInit{
 

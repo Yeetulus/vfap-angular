@@ -1,0 +1,40 @@
+<div class="page-margin" style="height: 100%">
+
+  <div style="display: flex">
+    <button style="margin-top: 5px; margin-right: 5px;" matTooltip="Create loan" color="primary" mat-icon-button (click)="createLoan()">
+      <mat-icon>add_circle</mat-icon>
+    </button>
+    <app-search-bar placeholder="Type in user email" inputType="email" (searchQueryChanged)="searchLoansFromUser($event)"></app-search-bar>
+    <mat-slide-toggle style="user-select: none; margin-top: 20px; margin-left: 10px" [ngModel]="showOnlyActive" color="primary" (ngModelChange)="changeShowOnlyActive()">Show only active loans</mat-slide-toggle>
+  </div>
+  <div class="scrollable-content" style="height: 71% ; margin-right: -15px">
+    <ng-container *ngFor="let loan of loans">
+      <mat-card style="margin-top: 2px; margin-right: 3px">
+        <mat-card-header>
+          <mat-card-title>{{loan.copy.book.title}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ng-container *ngIf="loan.actualReturnDate !== null; else scheduledText">
+            <p>Date of return: {{ loan.actualReturnDate | date: 'dd. MM. yyyy' }}</p>
+          </ng-container>
+          <ng-template #scheduledText>
+            <p >Return deadline: <span class="{{isPastScheduledReturnDate(loan) ? 'text-red-bold' : ''}}" >{{ loan.scheduledReturnDate | date:'dd. MM. yyyy' }}</span></p>
+          </ng-template>
+          <div *ngIf="loan.actualReturnDate === null; else empty" style="position: absolute; top: 5px; right: 5px; display: flex; align-items: center;">
+            <button matTooltip="Return loan" mat-icon-button color="primary" (click)="returnLoan(loan)">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+          </div>
+          <ng-template #empty>
+            <div style="position: absolute; top: 5px; right: 5px; display: flex; align-items: center;">
+
+            </div>
+          </ng-template>
+        </mat-card-content>
+
+      </mat-card>
+
+    </ng-container>
+  </div>
+
+</div>

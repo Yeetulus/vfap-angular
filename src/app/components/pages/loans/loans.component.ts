@@ -5,7 +5,7 @@ import {Loan} from "../../../models/booking/loan";
 @Component({
   selector: 'app-loans',
   templateUrl: './loans.component.html',
-  styleUrls: ['./loans.component.css']
+  styleUrls: ['./loans.component.css', '../../../../style.scss']
 })
 export class LoansComponent implements OnInit{
 

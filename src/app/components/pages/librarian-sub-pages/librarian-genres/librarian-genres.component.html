@@ -1,0 +1,27 @@
+<div class="page-margin" style="height: 100%">
+
+    <div style="display: flex; margin-top: -10px; align-items: center;">
+        <button mat-icon-button matTooltip="Create genre" color="primary" (click)="createGenre()">
+            <mat-icon>add_circle</mat-icon>
+        </button>
+        <h2 style="margin-top: 15px">Genres</h2>
+    </div>
+    <div class="scrollable-content"  style="height: 71%; margin-right: -15px">
+        <ng-container *ngFor="let genre of genres">
+            <mat-card class="scale-on-hover" style="margin-top: 2px; margin-right: 2px">
+                <div style=" display: flex; justify-content: space-between; align-items: flex-start;">
+                    <mat-card-content>{{genre.name}}</mat-card-content>
+
+                    <div style="display: flex;">
+                        <button mat-icon-button matTooltip="Edit genre" color="primary" (click)="editGenre(genre)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button matTooltip="Remove genre" color="primary" (click)="deleteGenre(genre)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </mat-card>
+        </ng-container>
+    </div>
+</div>
