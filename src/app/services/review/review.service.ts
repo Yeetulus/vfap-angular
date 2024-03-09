@@ -26,15 +26,6 @@ export class ReviewService {
     });
   }
 
-  getUserReviews(){
-    const url = "member/review/get-all"
-    return this.apiService.get<ReviewComment[]>(url, {}, true, response => {
-      return response;
-    }, (error, statusCode) => {
-      console.log("Error fetching reviews: ", error);
-    })
-  }
-
   leaveReview(newReview: {bookId: number, rating: number; comment: string}) {
     const url = "member/review/create";
     return this.apiService.post<ReviewComment>(url, newReview, undefined, true, response => {
@@ -43,7 +34,7 @@ export class ReviewService {
       return response;
     }, (error, statusCode) => {
       this.notificationService.showNotification("Review was not posted", NotificationType.Error);
-    });
+    }, true);
   }
 
   updateReview(bookId: number, newReview: {bookId: number, rating: number; comment: string}){
@@ -60,7 +51,7 @@ export class ReviewService {
       console.log("Review was not updated", error);
       this.notificationService.showNotification("Review was not edited", NotificationType.Error);
       return error;
-    });
+    }, true);
 
   }
 
@@ -77,6 +68,6 @@ export class ReviewService {
     }, error => {
       this.notificationService.showNotification("Review was not deleted", NotificationType.Error);
       return false;
-    })
+    }, true);
   }
 }

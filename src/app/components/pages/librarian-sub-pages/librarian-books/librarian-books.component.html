@@ -1,3 +1,40 @@
 <div class="page-margin" style="height: 100%">
+  <div style="display: flex; align-items: center">
+    <h2 style="margin-bottom: 20px; margin-left: 10px;">Books</h2>
+    <app-search-bar style="margin-left: 40px;" placeholder="Type in book title" inputType="text" (searchQueryChanged)="searchBooks($event)"></app-search-bar>
+    <button style="margin-bottom: 15px; margin-left: 5px;" mat-icon-button matTooltip="Create book" color="primary" (click)="createBook()">
+      <mat-icon>add_circle</mat-icon>
+    </button>
+  </div>
+  <div class="scrollable-content" style="height: 71% ; margin-right: -15px">
+    <ng-container *ngFor="let book of displayedBooks">
+      <mat-card class="scale-on-hover" style="margin-top: 2px; margin-right: 3px">
+        <mat-card-header>
+          <mat-card-title>{{book.title}}</mat-card-title>
+          <mat-card-subtitle>{{book.genre.name}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content style="padding-top: 4px">
+          <span style="margin-right: 3px" *ngFor="let author of book.authors; let last = last">
+            {{ author.name }}
+            <ng-container *ngIf="!last">,</ng-container>
+          </span><br>
+          <span> {{"Pages: " + book.pages}} </span><br>
+          <span> {{"Released: " + getDisplayedYear(book)}} </span><br>
+          <div style="position: absolute; top: 5px; right: 5px; display: flex; align-items: center;">
+            <button matTooltip="Edit book" color="primary" mat-icon-button (click)="editBook(book)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button matTooltip="Delete book record" color="primary" mat-icon-button (click)="deleteBook(book)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-card-content>
+
+      </mat-card>
+
+    </ng-container>
+    <mat-paginator *ngIf="displayedBooks.length > 0" style="margin-right: 4px;" [length]="bookResults.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)">
+    </mat-paginator>
+  </div>
 
 </div>

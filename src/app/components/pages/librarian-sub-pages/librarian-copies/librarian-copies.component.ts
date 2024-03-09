@@ -19,7 +19,6 @@ export class LibrarianCopiesComponent {
     bookResults: Book[] = [];
     copies: BookCopy[] = [];
 
-
     constructor(private bookService: BookService,
                 private copyService: CopyService,
                 private loanService: LoanService,
@@ -62,16 +61,22 @@ export class LibrarianCopiesComponent {
         const modalParams: ModalParams = {
             title: `Create loan for copy ${copy.id}`,
             fields: [
-                {name: "email", placeholder: "Email", type: "text"}
+                {name: "email", placeholder: "Email", type: "email"}
             ]
         };
         this.modalService.openModal(modalParams).subscribe(value => {
             if(value.email){
                 this.loanService.createLoan(copy, value.email).subscribe(value =>{
+                    copy.bookCondition = 'BORROWED' as unknown as CopyCondition;
                     console.log(value);
                 });
             }
         });
     }
 
+  createCopy() {
+    if(this.selectedBook) this.copyService.createCopy(this.selectedBook!).subscribe(value => {
+      this.copies.push(value);
+    });
+  }
 }

@@ -49,6 +49,8 @@ import { LibrarianCopiesComponent } from './components/pages/librarian-sub-pages
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ModalComponent } from './components/modal/modal.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatDatepicker, MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -78,34 +80,36 @@ import {MatDialogModule} from "@angular/material/dialog";
     SearchBarComponent,
     ModalComponent,
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        RouterOutlet,
-        RoutingModule,
-        HttpClientModule,
-        MatDividerModule,
-        MatToolbarModule,
-        MatDialogModule,
-        MatInputModule,
-        MatIconModule,
-        MatButtonModule,
-        MatSlideToggleModule,
-        FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        MatTooltipModule,
-        MatMenuModule,
-        MatSnackBarModule,
-        MatAutocompleteModule,
-        ReactiveFormsModule,
-        MatCardModule,
-        MatPaginatorModule,
-        MatSliderModule,
-        MatTabsModule,
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    RouterOutlet,
+    RoutingModule,
+    HttpClientModule,
+    MatDividerModule,
+    MatToolbarModule,
+    MatDialogModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatSliderModule,
+    MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

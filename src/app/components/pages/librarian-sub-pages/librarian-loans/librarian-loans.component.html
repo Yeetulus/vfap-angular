@@ -4,6 +4,7 @@
     <button style="margin-top: 5px; margin-right: 5px;" matTooltip="Create loan" color="primary" mat-icon-button (click)="createLoan()">
       <mat-icon>add_circle</mat-icon>
     </button>
+    <h2 style="margin-right: 25px; margin-bottom: 20px; align-self: center">Loans</h2>
     <app-search-bar placeholder="Type in user email" inputType="email" (searchQueryChanged)="searchLoansFromUser($event)"></app-search-bar>
     <mat-slide-toggle style="user-select: none; margin-top: 20px; margin-left: 10px" [ngModel]="showOnlyActive" color="primary" (ngModelChange)="changeShowOnlyActive()">Show only active loans</mat-slide-toggle>
   </div>

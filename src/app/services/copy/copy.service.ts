@@ -23,7 +23,7 @@ export class CopyService {
           console.log(`Fetched copies for book ${book.title}`, response);
         }, (error, statusCode) => {
           console.error(error, statusCode);
-        })
+        });
     }
 
   updateCopy(copy: BookCopy, condition:CopyCondition) {
@@ -38,6 +38,19 @@ export class CopyService {
         return response;
     }, error => {
         console.error(error);
-    });
+    }, true);
+  }
+
+  createCopy(book: Book ) {
+    const url = "librarian/copy/create";
+    const param = {
+      "bookId": book.id
+    }
+    return this.apiService.post<BookCopy>(url, {}, param, true, response => {
+      this.notificationService.showNotification(`Created new copy for book ${book.title}`);
+      return response;
+    }, error => {
+      console.error(error);
+    }, true);
   }
 }

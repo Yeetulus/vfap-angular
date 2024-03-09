@@ -134,7 +134,6 @@ export class BookViewComponent implements OnInit {
     this.reviewService.deleteReview(bookId).subscribe(deleted => {
       const userId = parseInt(localStorage.getItem("userId")!);
       const index = this.reviews?.messages.findIndex(review => review.userId === userId);
-      console.log("hello");
       if (index !== undefined && index !== -1) {
         this.reviews?.messages.splice(index, 1);
         this.updatePagedReviews();

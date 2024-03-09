@@ -12,7 +12,7 @@ export class ModalService {
 
   openModal(params: ModalParams): Observable<any> {
     const dialogRef = this.dialog.open(ModalComponent, {
-      width: "300px",
+      width: "350px",
       data: params
     });
 

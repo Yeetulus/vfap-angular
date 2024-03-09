@@ -8,9 +8,9 @@ import {catchError, Observable, tap, throwError} from "rxjs";
 export class ApiService {
 
   private baseUrl = '/api/';
-  //private baseUrl = '/api/';
   private accessTokenName = 'access_token';
   private refreshTokenName = 'refresh_token';
+  public logoutBehavior: () => void = () => {};
   constructor(private http: HttpClient) {}
 
   public get<T>(
@@ -18,7 +18,8 @@ export class ApiService {
     params?: { [param: string]: any },
     requiresAuthentication: boolean = false,
     successCallback?: (response: T) => void,
-    errorCallback?: (error: HttpErrorResponse, statusCode: number) => void
+    errorCallback?: (error: HttpErrorResponse, statusCode: number) => void,
+    logoutOnAuthFail?: boolean
   ): Observable<T> {
 
     const url = `${this.baseUrl}${endpoint}`;
@@ -28,7 +29,7 @@ export class ApiService {
     return this.http.get<T>(url, { params: httpParams, headers: httpHeaders }).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error('Error occurred: ', error);
-        return this.handleCustomError(error, errorCallback);
+        return this.handleCustomError(error, errorCallback, logoutOnAuthFail);
       }),
       tap((response: T) => {
         if (successCallback) {
@@ -44,13 +45,14 @@ export class ApiService {
     params?: { [param: string]: any },
     requiresAuthentication: boolean = false,
     successCallback?: (response: T) => void,
-    errorCallback?: (error: HttpErrorResponse, statusCode: number) => void
+    errorCallback?: (error: HttpErrorResponse, statusCode: number) => void,
+    logoutOnAuthFail? : boolean
   ): Observable<T> {
     const url = `${this.baseUrl}${endpoint}`;
     let httpParams = this.createHttpParams(params);
     let httpHeaders = this.createHeaders(requiresAuthentication, this.accessTokenName);
     return this.http.post<T>(url, data, { headers: httpHeaders, params: httpParams}).pipe(
-      catchError((error: HttpErrorResponse) => this.handleCustomError(error, errorCallback)),
+      catchError((error: HttpErrorResponse) => this.handleCustomError(error, errorCallback, logoutOnAuthFail)),
       tap((response: T) => {
         if (successCallback) {
           successCallback(response);
@@ -66,13 +68,14 @@ export class ApiService {
     params?: { [param: string]: any },
     requiresAuthentication: boolean = false,
     successCallback?: (response: T) => void,
-    errorCallback?: (error: HttpErrorResponse, statusCode: number) => void
+    errorCallback?: (error: HttpErrorResponse, statusCode: number) => void,
+    logoutOnAuthFail? :boolean
   ): Observable<T> {
     const url = `${this.baseUrl}${endpoint}`;
     let httpParams = this.createHttpParams(params);
     let httpHeaders = this.createHeaders(requiresAuthentication, this.accessTokenName);
     return this.http.put<T>(url, data, { headers: httpHeaders, params: httpParams}).pipe(
-      catchError((error: HttpErrorResponse) => this.handleCustomError(error, errorCallback)),
+      catchError((error: HttpErrorResponse) => this.handleCustomError(error, errorCallback, logoutOnAuthFail)),
       tap((response: T) => {
         if (successCallback) {
           successCallback(response);
@@ -86,13 +89,14 @@ export class ApiService {
     params?: { [param: string]: any },
     requiresAuthentication: boolean = false,
     successCallback?: (response: T) => void,
-    errorCallback?: (error: HttpErrorResponse, statusCode: number) => void
+    errorCallback?: (error: HttpErrorResponse, statusCode: number) => void,
+    logoutOnAuthFail?:boolean
   ): Observable<T> {
     const url = `${this.baseUrl}${endpoint}`;
     let httpParams = this.createHttpParams(params);
     let httpHeaders = this.createHeaders(requiresAuthentication, this.accessTokenName);
     return this.http.delete<T>(url, { headers: httpHeaders, params: httpParams}).pipe(
-      catchError((error: HttpErrorResponse) => this.handleCustomError(error, errorCallback)),
+      catchError((error: HttpErrorResponse) => this.handleCustomError(error, errorCallback, logoutOnAuthFail)),
       tap((response: T) => {
         if (successCallback) {
           successCallback(response);
@@ -139,12 +143,14 @@ export class ApiService {
 
   private handleCustomError(
     error: HttpErrorResponse,
-    errorCallback?: (error: HttpErrorResponse, statusCode: number) => void
+    errorCallback?: (error: HttpErrorResponse, statusCode: number) => void,
+    logoutOnAuthFail? : boolean
   ): Observable<never> {
     if (errorCallback) {
       const statusCode = error.status || 500;
+      if(logoutOnAuthFail && statusCode === 403) this.logoutBehavior();
       errorCallback(error, statusCode);
     }
-    return throwError(() =>error);
+    return throwError(() => error);
   }
 }

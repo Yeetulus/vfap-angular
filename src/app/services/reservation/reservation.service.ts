@@ -23,7 +23,7 @@ export class ReservationService {
       console.log(statusCode, "Error creating reservation", error);
       this.notificationService.showNotification(error.error, NotificationType.Error);
       return error;
-    })
+    }, true);
   }
 
   getReservations() {
@@ -32,7 +32,7 @@ export class ReservationService {
       console.log("Fetched reservations", response);
     }, error => {
       console.log("Error fetching reservations", error);
-    });
+    }, true);
 
   }
 
@@ -47,7 +47,7 @@ export class ReservationService {
     }, error => {
       this.notificationService.showNotification("Cannot cancel reservation", NotificationType.Error);
       return false;
-    })
+    }, true);
 
   }
 }

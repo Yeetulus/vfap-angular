@@ -21,7 +21,7 @@ export class LoanService {
       }, (error, statusCode) => {
         console.log("Error fetching loans ", error);
         return error;
-      });
+      }, true);
     }
   getAllUserLoansByEmail(email:string) {
     const url = "librarian/loan/user-loans"
@@ -31,7 +31,7 @@ export class LoanService {
     }, (error, statusCode) => {
       console.log("Error fetching loans ", error);
       return error;
-    });
+    }, true);
   }
   getAllActiveUserLoansByEmail(email:string) {
     const url = "librarian/loan/user-loans-active"
@@ -41,7 +41,7 @@ export class LoanService {
     }, (error, statusCode) => {
       console.log("Error fetching loans ", error);
       return error;
-    });
+    }, true);
   }
     getLoanCreated(bookId:number){
       return this.getAllUserLoans().pipe(map(value => {
@@ -63,7 +63,7 @@ export class LoanService {
           this.notificationService.showNotification("Loan was returned", NotificationType.Success);
         }, error => {
           this.notificationService.showNotification("Cannot return loan", NotificationType.Error);
-        });
+        }, true);
     }
 
     createLoan(copy: BookCopy, email:string) {
@@ -78,6 +78,6 @@ export class LoanService {
       }, error => {
         this.notificationService.showNotification("Cannot create loan", NotificationType.Error);
         console.error(error);
-      });
+      }, true);
     }
 }

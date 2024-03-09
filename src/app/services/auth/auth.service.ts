@@ -18,7 +18,11 @@ export class AuthService {
   private refreshTokenName = 'refresh_token';
   private accessTokenName = 'access_token';
 
-  constructor(private router: Router, private apiService: ApiService, private notificationService: NotificationService) {}
+  constructor(private router: Router, private apiService: ApiService, private notificationService: NotificationService) {
+    this.apiService.logoutBehavior = () =>{
+      this.logout();
+    }
+  }
 
   registerUser(request: RegistrationRequest) {
     this.apiService.post<AuthResponse>(

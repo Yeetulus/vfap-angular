@@ -1,3 +1,33 @@
 <div class="page-margin" style="height: 100%">
+  <div style="display: flex; align-items: center">
+    <h2 style="margin-bottom: 20px; margin-left: 10px;">Authors</h2>
+    <app-search-bar style="margin-left: 40px;" placeholder="Type in book title" inputType="text" (searchQueryChanged)="searchAuthors($event)"></app-search-bar>
+    <button style="margin-bottom: 15px; margin-left: 5px;" mat-icon-button matTooltip="Create author" color="primary" (click)="createAuthor()">
+      <mat-icon>add_circle</mat-icon>
+    </button>
+  </div>
+  <div class="scrollable-content" style="height: 71% ; margin-right: -15px">
+    <ng-container *ngFor="let author of displayedAuthors">
+      <mat-card class="scale-on-hover" style="margin-top: 2px; margin-right: 3px">
+        <mat-card-header>
+          <mat-card-title>{{author.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content style="padding-top: 4px">
+          <div style="position: absolute; top: 5px; right: 5px; display: flex; align-items: center;">
+            <button matTooltip="Edit name" color="primary" mat-icon-button (click)="editAuthor(author)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button matTooltip="Delete author record" color="primary" mat-icon-button (click)="deleteAuthor(author)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-card-content>
+
+      </mat-card>
+
+    </ng-container>
+    <mat-paginator *ngIf="filteredAuthors.length > 0" style="margin-right: 4px;" [length]="filteredAuthors.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)">
+    </mat-paginator>
+  </div>
 
 </div>
